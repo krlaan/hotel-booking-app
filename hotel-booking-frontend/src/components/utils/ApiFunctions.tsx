@@ -5,11 +5,11 @@ export const api = axios.create({
 })
 
 // This function add a new room to the database
-export async function addRoom(photo: File, roomType: string, roomPrice: number) {
+export async function addRoom(photo: File, roomType: string, roomPrice: string) {
     const formData = new FormData();
     formData.append('photo', photo);
     formData.append('roomType', roomType);
-    formData.append('roomPrice', roomPrice.toString());
+    formData.append('roomPrice', roomPrice);
 
     const response = await api.post('/rooms/add/new-room', formData)
 
