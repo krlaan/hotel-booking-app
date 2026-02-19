@@ -18,10 +18,10 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String roomType;
-    private double price;
+    private double roomPrice;
     private boolean isBooked = false;
 
     @Lob
