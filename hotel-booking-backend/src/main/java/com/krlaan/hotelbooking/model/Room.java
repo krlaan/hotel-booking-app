@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 public class Room {
 
@@ -21,7 +21,7 @@ public class Room {
     private Long id;
 
     private String roomType;
-    private double roomPrice;
+    private Double roomPrice;
     private boolean isBooked = false;
 
     @Lob
@@ -30,19 +30,26 @@ public class Room {
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
 
-    public Room() { // Avoid NullPointerException, Initialize bookings list
-        this.bookings = new ArrayList<>();
-    }
-
     public void addBooking(BookedRoom booking) {
         if (bookings == null) {
             bookings = new ArrayList<>();
         }
         bookings.add(booking);
-        booking.setRoom(this); // Ensure the booking knows its parent Room
+        booking.setRoom(this);
         isBooked = true;
 
         String bookingCode = RandomStringUtils.randomNumeric(10);
         booking.setBookingConfirmationCode(bookingCode);
+    }
+
+    public Room() {
+        this.bookings = new ArrayList<>();
+    }
+
+    public Room(String roomType, Double roomPrice, Blob photo) {
+        this.roomType = roomType;
+        this.roomPrice = roomPrice;
+        this.photo = photo;
+        this.bookings = new ArrayList<>();
     }
 }

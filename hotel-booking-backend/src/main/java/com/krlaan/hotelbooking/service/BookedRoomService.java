@@ -1,4 +1,4 @@
 package com.krlaan.hotelbooking.service;
 
-public class BookedRoomServiceImpl {
+public class BookedRoomService {
 }
