@@ -1,8 +1,15 @@
 import {type ChangeEvent, useState} from 'react'
 import {addRoom} from "../utils/ApiFunctions.tsx";
+import RoomTypeSelector from "../common/RoomTypeSelector.tsx";
+
+type NewRoom = {
+    photo: File | null;
+    roomType: string;
+    roomPrice: string;
+}
 
 const AddRoom = () => {
-    const [newRoom, setNewRoom] = useState({
+    const [newRoom, setNewRoom] = useState<NewRoom>({
         photo: null,
         roomType: "",
         roomPrice: "",
@@ -13,10 +20,10 @@ const AddRoom = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleRoomInputChange = (
-        e: ChangeEvent<HTMLInputElement>
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         const name = e.target.name;
-        let value: string | number = event.target.value;
+        let value: string | number = e.target.value;
 
         if (name === "roomPrice") {
             const num = parseInt(value)
@@ -30,6 +37,8 @@ const AddRoom = () => {
     const handleImageChange = (
         e: ChangeEvent<HTMLInputElement>
     ) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+
         const selectedImage = e.target.files[0];
         setNewRoom({...newRoom, photo: selectedImage});
         setImagePreview(URL.createObjectURL(selectedImage));
@@ -71,9 +80,69 @@ const AddRoom = () => {
     }
 
     return (
-        <div>
-            AddRoom
-        </div>
+        <>
+            <section className="container mt-5 mb-5">
+                <div className="row justify-content-center">
+                    <div className="col-md-8 col-lg-6">
+                        <h2 className="mt-5 mb-2">Add a New Room</h2>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label htmlFor="roomType" className="form-label">
+                                    Room Type
+                                </label>
+                                <div>
+                                    <RoomTypeSelector
+                                        handleRoomInputChange={handleRoomInputChange}
+                                        newRoom={newRoom}
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="roomPrice" className="form-label">
+                                    Room Price
+                                </label>
+                                <input
+                                    className="form-control"
+                                    required
+                                    id="roomPrice"
+                                    type="number"
+                                    name="roomPrice"
+                                    value={newRoom.roomPrice}
+                                    onChange={handleRoomInputChange}
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="photo" className="form-label">
+                                    Room Photo
+                                </label>
+                                <input
+                                    className="form-control"
+                                    id="photo"
+                                    name="photo"
+                                    type="file"
+                                    onChange={handleImageChange}
+                                />
+                                {imagePreview && (
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview Room Photo"
+                                        style={{ maxWidth: "400px", maxHeight: "400px" }}
+                                        className="mb-3"
+                                    />
+                                )}
+                            </div>
+                            <div className="d-grid d-md-flex mt-2">
+                                <button className="btn btn-outline-primary ml-5">
+                                    Save Room
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </>
     )
 }
 
