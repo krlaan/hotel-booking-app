@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type {Room} from "../../types/Room.ts";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -46,5 +47,28 @@ export async function deleteRoom(roomId: number) {
 
     } catch {
         throw new Error("Error deleting room with id " + roomId);
+    }
+}
+
+// This function updates a room
+export async function updateRoom(roomId: number, roomData: Room) {
+    const formData = new FormData();
+    formData.append('photo', roomData.photo);
+    formData.append('roomType', roomData.roomType);
+    formData.append('roomPrice', roomData.roomPrice);
+
+    const result = await api.put(`/rooms/update/${roomId}`, formData);
+
+    return result.status === 201; // true or false
+}
+
+// This function gets a room by the id
+export async function getRoomById(roomId: number) {
+    try {
+        const result = await api.get(`/rooms/room/${roomId}`);
+        return result.data;
+
+    } catch {
+        throw new Error("Error fetching room with id " + roomId);
     }
 }
