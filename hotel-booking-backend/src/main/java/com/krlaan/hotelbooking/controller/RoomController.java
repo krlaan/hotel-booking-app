@@ -48,6 +48,7 @@ public class RoomController {
         return roomService.getAllRoomTypes();
     }
 
+    @GetMapping("/all-rooms")
     public ResponseEntity<List<RoomResponse>> getAllRooms() throws SQLException, ResourceNotFoundException, PhotoRetrievalException {
         List<Room> rooms = roomService.getAllRooms();
         List<RoomResponse> roomResponses = new ArrayList<>();

@@ -1,5 +1,5 @@
 import {type ChangeEvent, useState} from 'react'
-import {addRoom} from "../utils/ApiFunctions.tsx";
+import {addRoom} from "../utils/ApiFunctions.ts";
 import RoomTypeSelector from "../common/RoomTypeSelector.tsx";
 
 type NewRoom = {
