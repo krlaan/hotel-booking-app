@@ -1,5 +1,6 @@
 package com.krlaan.hotelbooking.service;
 
+import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.Room;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,4 +13,8 @@ public interface IRoomService {
     Room addNewRoom(MultipartFile photo, String roomType, Double roomPrice) throws SQLException, IOException;
 
     List<String> getAllRoomTypes();
+
+    List<Room> getAllRooms();
+
+    byte[] getRoomPhotoByRoomId(Long roomId) throws SQLException, ResourceNotFoundException;
 }

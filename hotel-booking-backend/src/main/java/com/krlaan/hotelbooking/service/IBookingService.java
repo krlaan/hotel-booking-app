@@ -1,4 +1,4 @@
 package com.krlaan.hotelbooking.service;
 
-public interface IBookedRoomService {
+public interface IBookingService {
 }
