@@ -1,5 +1,4 @@
 import axios from 'axios';
-import type {Room} from "../../types/Room.ts";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -51,11 +50,13 @@ export async function deleteRoom(roomId: number) {
 }
 
 // This function updates a room
-export async function updateRoom(roomId: number, roomData: Room) {
+export async function updateRoom(roomId: number, photo: File | null, roomType: string, roomPrice: string) {
     const formData = new FormData();
-    formData.append('photo', roomData.photo);
-    formData.append('roomType', roomData.roomType);
-    formData.append('roomPrice', roomData.roomPrice);
+    if (photo) {
+        formData.append('photo', photo);
+    }
+    formData.append('roomType', roomType);
+    formData.append('roomPrice', roomPrice);
 
     const result = await api.put(`/rooms/update/${roomId}`, formData);
 
