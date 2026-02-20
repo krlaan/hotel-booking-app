@@ -77,6 +77,10 @@ const AddRoom = () => {
                 setErrorMessage("An unexpected error occurred");
             }
         }
+        setTimeout(() => {
+            setSuccessMessage("");
+            setErrorMessage("");
+        }, 3000);
     }
 
     return (
@@ -87,12 +91,12 @@ const AddRoom = () => {
                         <h2 className="mt-5 mb-2">Add a New Room</h2>
 
                         {successMessage && (
-                            <div className="alert alert-success" role="alert">
+                            <div className="alert alert-success fade show" role="alert">
                                 {successMessage}
                             </div>
                         )}
                         {errorMessage && (
-                            <div className="alert alert-danger" role="alert">
+                            <div className="alert alert-danger fade show" role="alert">
                                 {errorMessage}
                             </div>
                         )}
