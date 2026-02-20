@@ -9,6 +9,7 @@ import com.krlaan.hotelbooking.response.RoomResponse;
 import com.krlaan.hotelbooking.service.BookingService;
 import com.krlaan.hotelbooking.service.IRoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,6 +68,12 @@ public class RoomController {
         }
 
         return ResponseEntity.ok(roomResponses);
+    }
+
+    @DeleteMapping("/delete/room/{roomId}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable("roomId") Long roomId) {
+        roomService.deleteRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private RoomResponse getRoomResponse(Room room) throws PhotoRetrievalException {
