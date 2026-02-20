@@ -52,6 +52,12 @@ body {
     }
 }
 
+/* Dropdown menu styling */
+.dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+}
+
 /* Hotel custom color */
 .btn-hotel {
     background-color: rgb(169, 77, 123);
