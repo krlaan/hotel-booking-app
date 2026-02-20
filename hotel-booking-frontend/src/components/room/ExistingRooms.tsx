@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react';
-import {getAllRooms} from "../utils/ApiFunctions.ts";
+import {deleteRoom, getAllRooms} from "../utils/ApiFunctions.ts";
 import {Col} from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter.tsx";
 import type {Room} from "../../types/Room.ts";
 import RoomPaginator from "../common/RoomPaginator.tsx";
+import {FaEdit, FaEye, FaTrashAlt} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ExistingRooms = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
@@ -15,25 +17,25 @@ const ExistingRooms = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        const fetchRooms = async () => {
-            setIsLoading(true);
+    const fetchRooms = async () => {
+        setIsLoading(true);
 
-            try {
-                const result = await getAllRooms();
-                setRooms(result);
+        try {
+            const result = await getAllRooms();
+            setRooms(result);
 
-            } catch (error: unknown) {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message);
-                } else {
-                    setErrorMessage("An unexpected error occurred");
-                }
-            } finally {
-                setIsLoading(false);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An unexpected error occurred");
             }
-        };
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
+    useEffect(() => {
         void fetchRooms();
     }, []);
 
@@ -48,15 +50,38 @@ const ExistingRooms = () => {
 
     }, [rooms, selectedRoomType]);
 
+    const handlePaginationClick = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    }
+
+    const handleDeleteRoom = async (roomId: number) => {
+        try {
+            const result = await deleteRoom(roomId);
+            if (result === "") {
+                setSuccessMessage(`Room number ${roomId} was deleted`);
+                void fetchRooms();
+            } else {
+                console.error(`Error deleting room: ${roomId}`);
+            }
+
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An unexpected error occurred");
+            }
+        }
+        setTimeout(() => {
+            setSuccessMessage("");
+            setErrorMessage("");
+        }, 3000)
+    }
+
     const calculateTotalPages = (
         filteredRooms: Room[], roomsPerPage: number, rooms: Room[]
     ) => {
         const totalPages = filteredRooms.length > 0 ? filteredRooms.length : rooms.length;
         return Math.ceil(totalPages / roomsPerPage);
-    }
-
-    const handlePaginationClick = (pageNumber: number) => {
-        setCurrentPage(pageNumber);
     }
 
     const indexOfLastRoom = currentPage * roomsPerPage;
@@ -92,12 +117,21 @@ const ExistingRooms = () => {
                                     <td>{room.id}</td>
                                     <td>{room.roomType}</td>
                                     <td>{room.roomPrice}</td>
-                                    <td>
-                                        <button>
-                                            View / Edit
-                                        </button>
-                                        <button>
-                                            Delete
+                                    <td className="gap-2">
+                                        <Link to={`edit-room/${room.id}`}>
+                                            <span className="btn btn-info btn-sm">
+                                                <FaEye />
+                                            </span>
+                                            <span className="btn btn-warning btn-sm">
+                                                <FaEdit />
+                                            </span>
+                                        </Link>
+
+                                        <button
+                                            className="btn btn-danger btn-sm"
+                                            onClick={() => handleDeleteRoom(room.id)}
+                                        >
+                                            <FaTrashAlt />
                                         </button>
                                     </td>
                                 </tr>
