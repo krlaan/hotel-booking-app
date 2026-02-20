@@ -7,7 +7,7 @@ import RoomPaginator from "../common/RoomPaginator.tsx";
 import {FaEdit, FaEye, FaTrashAlt} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const ExistingRooms = () => {
+const Rooms = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(8);
@@ -91,12 +91,12 @@ const ExistingRooms = () => {
     return (
         <>
             {isLoading ? (
-                <p>Loading existing rooms...</p>
+                <p>Loading rooms...</p>
             ) : (
                 <>
                     <section className="mt-5 mb-5 container">
                         <div className="d-flex justify-content-center mb-3 mt-5">
-                            <h2>Existing rooms</h2>
+                            <h2>Rooms</h2>
                         </div>
                         <Col md={6} className="mb-3 mb-md-0">
                             <RoomFilter data={rooms} setFilteredData={setFilteredRooms}/>
@@ -149,4 +149,4 @@ const ExistingRooms = () => {
     );
 };
 
-export default ExistingRooms;
+export default Rooms;
