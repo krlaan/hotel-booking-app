@@ -1,5 +1,6 @@
 package com.krlaan.hotelbooking.service;
 
+import com.krlaan.hotelbooking.exception.InternalServerException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.repository.IRoomRepository;
@@ -60,6 +61,24 @@ public class RoomService implements IRoomService {
         }
 
         return null;
+    }
+
+    @Override
+    public Room updateRoom(Long roomId, String roomType, Double roomPrice, byte[] photoBytes) throws ResourceNotFoundException {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+
+        if (roomType != null) room.setRoomType(roomType);
+        if (roomPrice != null) room.setRoomPrice(roomPrice);
+        if (photoBytes != null && photoBytes.length > 0) {
+            try {
+                room.setPhoto(new SerialBlob(photoBytes));
+            } catch (SQLException e) {
+                throw new InternalServerException("Error updating room");
+            }
+        }
+
+        return roomRepository.save(room);
     }
 
     @Override

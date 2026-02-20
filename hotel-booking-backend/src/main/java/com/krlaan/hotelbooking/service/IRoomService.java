@@ -18,5 +18,7 @@ public interface IRoomService {
 
     byte[] getRoomPhotoByRoomId(Long roomId) throws SQLException, ResourceNotFoundException;
 
+    Room updateRoom(Long roomId, String roomType, Double roomPrice, byte[] photoBytes) throws ResourceNotFoundException;
+
     void deleteRoom(Long roomId);
 }
