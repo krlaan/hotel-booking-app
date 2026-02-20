@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
-
-type Room = {
-    photo: string;
-    roomType: string;
-    roomPrice: number;
-};
+import type {Room} from "../../types/Room.ts";
 
 type Props = {
     data: Room[];

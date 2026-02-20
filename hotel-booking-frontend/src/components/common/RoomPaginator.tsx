@@ -9,7 +9,7 @@ const RoomPaginator = ({currentPage, totalPages, onPageChange}: Props) => {
 
     return (
         <nav aria-label="Page navigation">
-            <ul className="paginator justify-content-center">
+            <ul className="pagination justify-content-center">
                 {pageNumbers.map((pageNumber) => (
                     <li
                         key={pageNumber}

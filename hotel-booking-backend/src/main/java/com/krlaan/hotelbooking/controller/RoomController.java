@@ -72,13 +72,13 @@ public class RoomController {
     private RoomResponse getRoomResponse(Room room) throws PhotoRetrievalException {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
 
-        List<BookingResponse> bookingInfo = bookings.
-                stream().
-                map(booking -> new BookingResponse(booking.getBookingId(),
-                        booking.getCheckInDate(),
-                        booking.getCheckOutDate(),
-                        booking.getBookingConfirmationCode()))
-                .toList();
+//        List<BookingResponse> bookingInfo = bookings.
+//                stream().
+//                map(booking -> new BookingResponse(booking.getBookingId(),
+//                        booking.getCheckInDate(),
+//                        booking.getCheckOutDate(),
+//                        booking.getBookingConfirmationCode()))
+//                .toList();
 
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();
@@ -92,10 +92,12 @@ public class RoomController {
             }
         }
 
-        return new RoomResponse(room.getId(),
+        return new RoomResponse(
+                room.getId(),
                 room.getRoomType(),
                 room.getRoomPrice(),
-                room.isBooked(), photoBytes, bookingInfo);
+                room.isBooked(),
+                photoBytes);
     }
 
     private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
