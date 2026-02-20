@@ -13,7 +13,7 @@ const Rooms = () => {
     const [roomsPerPage] = useState(8);
     const [isLoading, setIsLoading] = useState(false);
     const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
-    const [selectedRoomType, setSelectedRoomType] = useState('');
+    const [selectedRoomType] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -90,6 +90,12 @@ const Rooms = () => {
 
     return (
         <>
+            <div className="container col-md-8 col-lg-6">
+                {successMessage && <p className="alert alert-success mt-5">{successMessage}</p>}
+
+                {errorMessage && <p className="alert alert-danger mt-5">{errorMessage}</p>}
+            </div>
+
             {isLoading ? (
                 <p>Loading rooms...</p>
             ) : (
@@ -97,6 +103,7 @@ const Rooms = () => {
                     <section className="mt-5 mb-5 container">
                         <div className="d-flex justify-content-center mb-3 mt-5">
                             <h2>Rooms</h2>
+
                         </div>
                         <Col md={6} className="mb-3 mb-md-0">
                             <RoomFilter data={rooms} setFilteredData={setFilteredRooms}/>

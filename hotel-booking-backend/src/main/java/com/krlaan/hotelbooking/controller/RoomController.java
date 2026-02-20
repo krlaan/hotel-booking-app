@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 // Allow CORS requests from the React frontend running on localhost:5173
 @CrossOrigin(origins = "http://localhost:5173")
@@ -69,6 +70,16 @@ public class RoomController {
         }
 
         return ResponseEntity.ok(roomResponses);
+    }
+
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<Optional<RoomResponse>> getRoomById(@PathVariable Long roomId) throws ResourceNotFoundException {
+        Optional<Room> room = roomService.getRoomById(roomId);
+
+        return room.map(r -> {
+            RoomResponse roomResponse = getRoomResponse(r);
+            return ResponseEntity.ok(Optional.of(roomResponse));
+        }).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
     }
 
     @PutMapping("/update/{roomId}")

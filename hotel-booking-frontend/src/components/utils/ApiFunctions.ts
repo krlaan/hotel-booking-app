@@ -52,7 +52,7 @@ export async function deleteRoom(roomId: number) {
 // This function updates a room
 export async function updateRoom(roomId: number, photo: File | null, roomType: string, roomPrice: string) {
     const formData = new FormData();
-    if (photo) {
+    if (photo instanceof File) {
         formData.append('photo', photo);
     }
     formData.append('roomType', roomType);
@@ -60,7 +60,7 @@ export async function updateRoom(roomId: number, photo: File | null, roomType: s
 
     const result = await api.put(`/rooms/update/${roomId}`, formData);
 
-    return result.status === 201; // true or false
+    return result.data;
 }
 
 // This function gets a room by the id

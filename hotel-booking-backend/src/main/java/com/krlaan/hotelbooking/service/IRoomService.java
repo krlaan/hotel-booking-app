@@ -7,12 +7,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface IRoomService {
 
     Room addNewRoom(MultipartFile photo, String roomType, Double roomPrice) throws SQLException, IOException;
 
     List<String> getAllRoomTypes();
+
+    Optional<Room> getRoomById(Long roomId);
 
     List<Room> getAllRooms();
 
