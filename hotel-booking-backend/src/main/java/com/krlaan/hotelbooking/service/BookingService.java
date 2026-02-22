@@ -14,7 +14,7 @@ import java.util.List;
 public class BookingService implements IBookingService {
 
     private final BookingRepository bookingRepository;
-    private final RoomService roomService;
+    private final IRoomService roomService;
 
     @Override
     public List<BookedRoom> getAllBookings() {

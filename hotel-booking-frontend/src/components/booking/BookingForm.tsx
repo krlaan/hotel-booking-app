@@ -79,8 +79,8 @@ const BookingForm = () => {
     }
 
     const isCheckoutDateValid = () => {
-        if (!moment(booking.checkOutDate).isSameOrAfter(booking.checkInDate)) {
-            setErrorMessage("Check-out date must be before check-in date");
+        if (!moment(booking.checkOutDate).isSameOrAfter(moment(booking.checkInDate))) {
+            setErrorMessage("Check-out date must be after check-in date");
             return false;
         } else {
             setErrorMessage("");
@@ -114,14 +114,9 @@ const BookingForm = () => {
             navigate("/booking-success", {state: {message: confirmationCode}});
 
         } catch (error: unknown) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message);
-                navigate("/booking-success", {state: {error: error.message}});
-            } else {
-                setErrorMessage("An unexpected error occurred");
-                navigate("/booking-success", {state: {error: "An unexpected error occurred"}});
-            }
-            navigate("/booking-success", {state: {error: errorMessage}});
+            const errorMsg = error instanceof Error ? error.message : "An unexpected error occurred";
+            setErrorMessage(errorMsg);
+            setIsSubmitted(false);
         }
     }
 
@@ -184,7 +179,7 @@ const BookingForm = () => {
                                                 name="checkInDate"
                                                 value={booking.checkInDate}
                                                 placeholder="check-in-date"
-                                                min={moment().format("MMM Do, YYYY")}
+                                                min={moment().format("YYYY-MM-DD")}
                                                 onChange={handleInputChange}
                                             />
                                             <Form.Control.Feedback type="invalid">
@@ -203,7 +198,7 @@ const BookingForm = () => {
                                                 name="checkOutDate"
                                                 value={booking.checkOutDate}
                                                 placeholder="check-out-date"
-                                                min={moment().format("MMM Do, YYYY")}
+                                                min={moment().format("YYYY-MM-DD")}
                                                 onChange={handleInputChange}
                                             />
                                             <Form.Control.Feedback type="invalid">

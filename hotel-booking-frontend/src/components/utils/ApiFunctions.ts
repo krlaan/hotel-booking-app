@@ -88,11 +88,9 @@ export async function bookRoom(roomId: number, booking: {
         const result = await api.post<string>(`/bookings/room/${roomId}/booking`, booking);
         return result.data;
     } catch (err: unknown) {
-        // Приводим к AxiosError для безопасного доступа к response
         const error = err as AxiosError;
 
         if (error.response?.data) {
-            // Если сервер вернул сообщение об ошибке
             throw new Error(String(error.response.data));
         } else if (error.message) {
             throw new Error(`Error booking room: ${error.message}`);
@@ -127,7 +125,7 @@ export async function getBookingByConfirmationCode(confirmationCode: number) {
 // This function cancels booking form the database
 export async function cancelBooking(bookingId: number) {
     try {
-        const result = await api.post(`/bookings/booking/${bookingId}/delete`);
+        const result = await api.delete(`/bookings/booking/${bookingId}/delete`);
         return result.data;
 
     } catch {
