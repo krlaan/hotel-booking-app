@@ -3,9 +3,8 @@ package com.krlaan.hotelbooking.service;
 import com.krlaan.hotelbooking.exception.InternalServerException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.Room;
-import com.krlaan.hotelbooking.repository.IRoomRepository;
+import com.krlaan.hotelbooking.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoomService implements IRoomService {
 
-    private final IRoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     @Override
     public Room addNewRoom(MultipartFile file, String roomType, Double roomPrice) throws SQLException, IOException {

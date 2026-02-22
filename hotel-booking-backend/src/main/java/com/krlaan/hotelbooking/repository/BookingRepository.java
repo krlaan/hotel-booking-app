@@ -1,4 +1,4 @@
 package com.krlaan.hotelbooking.repository;
 
-public class BookedRoomRepository {
+public interface BookingRepository {
 }
