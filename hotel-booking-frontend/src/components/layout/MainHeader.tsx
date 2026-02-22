@@ -1,4 +1,4 @@
-const HeaderMain = () => {
+const MainHeader = () => {
     return (
         <header className="header-banner">
             <div className="overlay">
@@ -13,4 +13,4 @@ const HeaderMain = () => {
     );
 };
 
-export default HeaderMain;
+export default MainHeader;

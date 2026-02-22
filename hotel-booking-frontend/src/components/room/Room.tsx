@@ -8,7 +8,7 @@ import RoomPaginator from "../common/RoomPaginator.tsx";
 
 export const Room = () => {
     const [data, setData] = useState<RoomType[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(6);
@@ -20,7 +20,7 @@ export const Room = () => {
             setFilteredData(data);
             setIsLoading(false);
         }).catch((error)=> {
-            setError(error.message);
+            setErrorMessage(error.message);
             setIsLoading(false);
         });
     }, []);
@@ -30,9 +30,9 @@ export const Room = () => {
             Loading rooms...
         </div>
     }
-    if (error) {
+    if (errorMessage) {
         return <div className="text-danger">
-            Error: {error}
+            Error: {errorMessage}
         </div>;
     }
 
