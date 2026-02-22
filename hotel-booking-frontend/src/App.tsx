@@ -7,6 +7,7 @@ import AddRoom from "./components/room/AddRoom.tsx";
 import NavBar from "./components/layout/NavBar.tsx";
 import Footer from "./components/layout/Footer.tsx";
 import RoomListing from "./components/room/RoomListing.tsx";
+import Admin from "./components/admin/Admin.tsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/rooms" element={<Rooms />} />
                     <Route path="/add-room" element={<AddRoom />} />
                     <Route path="/browse-all-rooms" element={<RoomListing />} />
+                    <Route path="/admin" element={<Admin />} />
                 </Routes>
             </main>
             <Footer />
