@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type {Booking} from "../../types/Booking.ts";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -71,5 +72,49 @@ export async function getRoomById(roomId: number) {
 
     } catch {
         throw new Error("Error fetching room with id " + roomId);
+    }
+}
+
+// This function saves a new booking to the database
+export async function bookRoom(roomId: number, booking: Booking) {
+    try {
+        const result = await api.post(`/bookings/room/${roomId}/booking`, booking)
+        return result.data;
+
+    } catch {
+        throw new Error("Error booking room with id " + roomId);
+    }
+}
+
+// This function gets all bookings from the database
+export async function getAllBookings() {
+    try {
+        const result = await api.get("/bookings/all-bookings");
+        return result.data;
+
+    } catch {
+        throw new Error("Error fetching bookings");
+    }
+}
+
+// This function gets booking by the confirmation code
+export async function getBookingByConfirmationCode(confirmationCode: number) {
+    try {
+        const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
+        return result.data;
+
+    } catch {
+        throw new Error("Error finding booking with confirmation code: " + confirmationCode);
+    }
+}
+
+// This function cancels booking form the database
+export async function cancelBooking(bookingId: number) {
+    try {
+        const result = await api.post(`/bookings/booking/${bookingId}/delete`);
+        return result.data;
+
+    } catch {
+        throw new Error("Error cancelling booking with id " + bookingId);
     }
 }
