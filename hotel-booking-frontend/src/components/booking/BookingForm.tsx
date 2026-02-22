@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {getRoomById} from "../utils/ApiFunctions.ts";
-import {useParams} from "react-router-dom";
+import {type ChangeEvent, useEffect, useState} from "react";
+import {bookRoom, getRoomById} from "../utils/ApiFunctions.ts";
+import {useNavigate, useParams} from "react-router-dom";
 import moment from "moment";
 
 const BookingForm = () => {
@@ -19,6 +19,8 @@ const BookingForm = () => {
 
     const {roomId: roomIdParam} = useParams();
     const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
+
+    const navigate = useNavigate();
 
     const [roomInfo, setRoomInfo] = useState({
         photo: "",
@@ -64,13 +66,58 @@ const BookingForm = () => {
         return diffInDays * price;
     }
 
-    const isGuestValid = () => {
+    const isGuestCountValid = () => {
         const adultCount = parseInt(booking.numOfAdults);
         const childrenCount = parseInt(booking.numOfChildren);
 
         const totalCount = adultCount + childrenCount;
 
         return totalCount >= 1 && adultCount >= 1;
+    }
+
+    const isCheckoutDateValid = () => {
+        if (!moment(booking.checkOutDate).isSameOrAfter(booking.checkInDate)) {
+            setErrorMessage("Check-out date must be before check-in date");
+            return false;
+        } else {
+            setErrorMessage("");
+            return true;
+        }
+    }
+
+    const handleSubmit = (
+        e: ChangeEvent<HTMLFormElement>
+    ) => {
+        e.preventDefault();
+
+        const form = e.currentTarget;
+        if (!form.checkValidity() || !isGuestCountValid() || !isCheckoutDateValid()) {
+            e.stopPropagation();
+        } else {
+            setIsSubmitted(true);
+        }
+
+        setIsValidated(true);
+    }
+
+    const handleBooking = async () => {
+        if (roomId == null) {
+            setErrorMessage("Room id is missing");
+            return;
+        }
+        try {
+            const confirmationCode = await bookRoom(roomId, booking);
+            setIsSubmitted(true);
+            navigate("/", {state:{message: confirmationCode}});
+
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An unexpected error occurred");
+            }
+            navigate("/", {state:{message: errorMessage}});
+        }
     }
 
     return (

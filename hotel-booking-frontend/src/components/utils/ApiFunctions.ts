@@ -1,5 +1,4 @@
 import axios from 'axios';
-import type {Booking} from "../../types/Booking.ts";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -76,7 +75,14 @@ export async function getRoomById(roomId: number) {
 }
 
 // This function saves a new booking to the database
-export async function bookRoom(roomId: number, booking: Booking) {
+export async function bookRoom(roomId: number, booking: {
+    guestFullName: string;
+    guestEmail: string;
+    checkInDate: string;
+    checkOutDate: string;
+    numOfAdults: number;
+    numOfChildren: number
+}) {
     try {
         const result = await api.post(`/bookings/room/${roomId}/booking`, booking)
         return result.data;
