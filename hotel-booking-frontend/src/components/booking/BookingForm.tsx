@@ -117,6 +117,7 @@ const BookingForm = () => {
             const errorMsg = error instanceof Error ? error.message : "An unexpected error occurred";
             setErrorMessage(errorMsg);
             setIsSubmitted(false);
+            navigate("/booking-success", {state: {error: errorMsg}});
         }
     }
 

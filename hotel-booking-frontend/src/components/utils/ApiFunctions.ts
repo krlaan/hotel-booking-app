@@ -91,7 +91,10 @@ export async function bookRoom(roomId: number, booking: {
         const error = err as AxiosError;
 
         if (error.response?.data) {
-            throw new Error(String(error.response.data));
+            const errorData = error.response.data;
+            // Handle both string and object error responses
+            const errorMessage = typeof errorData === 'string' ? errorData : (errorData as any).message || String(errorData);
+            throw new Error(errorMessage);
         } else if (error.message) {
             throw new Error(`Error booking room: ${error.message}`);
         } else {
