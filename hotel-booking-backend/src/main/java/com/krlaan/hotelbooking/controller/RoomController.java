@@ -4,9 +4,8 @@ import com.krlaan.hotelbooking.exception.PhotoRetrievalException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
-import com.krlaan.hotelbooking.response.BookingResponse;
 import com.krlaan.hotelbooking.response.RoomResponse;
-import com.krlaan.hotelbooking.service.BookingService;
+import com.krlaan.hotelbooking.service.IBookingService;
 import com.krlaan.hotelbooking.service.IRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ import java.util.Optional;
 public class RoomController {
 
     private final IRoomService roomService;
-    private final BookingService bookingService;
+    private final IBookingService bookingService;
 
     @PostMapping("/add/new-room")
     public ResponseEntity<RoomResponse> addNewRoom(

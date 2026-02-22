@@ -1,7 +1,6 @@
 package com.krlaan.hotelbooking.controller;
 
 import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
-import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.response.BookingResponse;
@@ -9,7 +8,6 @@ import com.krlaan.hotelbooking.response.RoomResponse;
 import com.krlaan.hotelbooking.service.IBookingService;
 import com.krlaan.hotelbooking.service.IRoomService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +19,7 @@ import java.util.List;
 @RequestMapping("/bookings")
 public class BookingController {
 
-    private IBookingService bookingService;
+    private final IBookingService bookingService;
     private final IRoomService roomService;
 
     @GetMapping("/all-bookings")
@@ -39,15 +37,10 @@ public class BookingController {
 
     @GetMapping("/confirmation/{confirmationCode}")
     public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) {
-        try {
-            BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
-            BookingResponse bookingResponse = getBookingResponse(booking);
+        BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
+        BookingResponse bookingResponse = getBookingResponse(booking);
 
-            return ResponseEntity.ok(bookingResponse);
-
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(bookingResponse);
     }
 
 
