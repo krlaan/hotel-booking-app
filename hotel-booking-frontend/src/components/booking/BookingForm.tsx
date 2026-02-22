@@ -28,7 +28,14 @@ const BookingForm = () => {
         e: ChangeEvent<HTMLInputElement>
     ) => {
         const {name, value} = e.target;
-        setBooking({...booking, [name]: value});
+
+        // HTML input type="number" returns string, need to parse to number
+        let parsedValue:string | number = value;
+        if (name === "numOfAdults" || name === "numOfChildren") {
+            parsedValue = parseInt(value, 10) || 0;
+        }
+
+        setBooking({...booking, [name]: parsedValue});
         setErrorMessage("");
     }
 
@@ -56,7 +63,7 @@ const BookingForm = () => {
         const checkInDate = moment(booking.checkInDate);
         const checkOutDate = moment(booking.checkOutDate);
 
-        const diffInDays = checkOutDate.diff(checkInDate);
+        const diffInDays = checkOutDate.diff(checkInDate, 'days');
         const price = roomPrice ? roomPrice : 0;
 
         return diffInDays * price;
@@ -104,15 +111,17 @@ const BookingForm = () => {
         try {
             const confirmationCode = await bookRoom(roomId, booking);
             setIsSubmitted(true);
-            navigate("/", {state: {message: confirmationCode}});
+            navigate("/booking-success", {state: {message: confirmationCode}});
 
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorMessage(error.message);
+                navigate("/booking-success", {state: {error: error.message}});
             } else {
                 setErrorMessage("An unexpected error occurred");
+                navigate("/booking-success", {state: {error: "An unexpected error occurred"}});
             }
-            navigate("/", {state: {message: errorMessage}});
+            navigate("/booking-success", {state: {error: errorMessage}});
         }
     }
 
@@ -155,7 +164,6 @@ const BookingForm = () => {
                                         value={booking.guestEmail}
                                         placeholder="Enter your email"
                                         onChange={handleInputChange}
-                                        disabled
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid email address.

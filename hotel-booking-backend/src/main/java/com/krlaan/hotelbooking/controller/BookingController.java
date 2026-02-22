@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bookings")
@@ -52,7 +53,7 @@ public class BookingController {
             String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
             return ResponseEntity.ok("Room booked successfully! Your confirmation code is: " + confirmationCode);
 
-        } catch (InvalidBookingRequestException e) {
+        } catch (InvalidBookingRequestException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

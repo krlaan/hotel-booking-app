@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { AxiosError } from "axios";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -84,11 +85,20 @@ export async function bookRoom(roomId: number, booking: {
     numOfChildren: number
 }) {
     try {
-        const result = await api.post(`/bookings/room/${roomId}/booking`, booking)
+        const result = await api.post<string>(`/bookings/room/${roomId}/booking`, booking);
         return result.data;
+    } catch (err: unknown) {
+        // Приводим к AxiosError для безопасного доступа к response
+        const error = err as AxiosError;
 
-    } catch {
-        throw new Error("Error booking room with id " + roomId);
+        if (error.response?.data) {
+            // Если сервер вернул сообщение об ошибке
+            throw new Error(String(error.response.data));
+        } else if (error.message) {
+            throw new Error(`Error booking room: ${error.message}`);
+        } else {
+            throw new Error("Unknown error booking room");
+        }
     }
 }
 
