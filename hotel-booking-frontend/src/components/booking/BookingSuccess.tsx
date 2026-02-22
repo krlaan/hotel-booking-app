@@ -1,7 +1,6 @@
 import {useLocation} from "react-router-dom";
 import Header from "../common/Header.tsx";
 
-
 const BookingSuccess = () => {
     const location = useLocation();
     const message = location.state?.message;
