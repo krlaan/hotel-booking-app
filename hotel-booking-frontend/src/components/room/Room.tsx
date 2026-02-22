@@ -1,19 +1,20 @@
 import {useEffect, useState} from "react";
 import {getAllRooms} from "../utils/ApiFunctions.ts";
 import RoomCard from "./RoomCard.tsx";
-import type {Room} from "../../types/Room.ts";
+import type {Room as RoomType} from "../../types/Room.ts";
+import {Col, Container, Row} from "react-bootstrap";
+import RoomFilter from "../common/RoomFilter.tsx";
+import RoomPaginator from "../common/RoomPaginator.tsx";
 
-const Room = () => {
-    const [data, setData] = useState<Room[]>([]);
+export const Room = () => {
+    const [data, setData] = useState<RoomType[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [roomsPerPage, setRoomsPerPage] = useState(6);
-    const [filteredData, setFilteredData] = useState<Room[]>([]);
+    const [roomsPerPage] = useState(6);
+    const [filteredData, setFilteredData] = useState<RoomType[]>([]);
 
     useEffect(() => {
-        setIsLoading(true);
-
         getAllRooms().then((data) => {
             setData(data);
             setFilteredData(data);
@@ -49,9 +50,33 @@ const Room = () => {
     }
 
     return (
-        <div>
+        <Container>
+            <Row>
+                <Col md={6} className="mb-3 mb-md-0">
+                    <RoomFilter data={data} setFilteredData={setFilteredData} />
+                </Col>
 
-        </div>
+                <Col md={6} className="d-flex align-items-center justify-content-end">
+                    <RoomPaginator
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </Col>
+            </Row>
+
+            <Row>{renderRooms()}</Row>
+
+            <Row>
+                <Col md={6} className="d-flex align-items-center justify-content-end">
+                    <RoomPaginator
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

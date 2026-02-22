@@ -6,6 +6,7 @@ import EditRoom from "./components/room/EditRoom.tsx";
 import AddRoom from "./components/room/AddRoom.tsx";
 import NavBar from "./components/layout/NavBar.tsx";
 import Footer from "./components/layout/Footer.tsx";
+import RoomListing from "./components/room/RoomListing.tsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/edit-room/:roomId" element={<EditRoom />} />
                     <Route path="/rooms" element={<Rooms />} />
                     <Route path="/add-room" element={<AddRoom />} />
+                    <Route path="/browse-all-rooms" element={<RoomListing />} />
                 </Routes>
             </main>
             <Footer />
