@@ -1,4 +1,8 @@
-const Header = (title: string) => {
+type HeaderProps = {
+    title: string;
+};
+
+const Header = ({title}: HeaderProps) => {
     return (
         <header className="header">
             <div className="overlay"></div>
