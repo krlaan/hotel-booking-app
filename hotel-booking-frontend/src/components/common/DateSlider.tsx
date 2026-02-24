@@ -1,19 +1,27 @@
 import {useState} from "react";
 import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
-import {DateRangePicker} from "react-date-range"
+import {DateRangePicker, type Range, type RangeKeyDict} from "react-date-range";
 
-const DateSlider = ({onDateChange, onFilterChange}) => {
-    const [dateRange, setDateRange] = useState<DateRangePicker>({
+type Props = {
+    onDateChange: (start: Date | null, end: Date | null) => void
+    onFilterChange: (start: Date | null, end: Date | null) => void
+}
+
+const DateSlider = ({onDateChange, onFilterChange}: Props) => {
+    const [dateRange, setDateRange] = useState<Range>({
         startDate: undefined,
         endDate: undefined,
         key: "selection"
     });
 
-    const handleSelect = (ranges: DateRangePicker) => {
-        setDateRange(ranges.selection);
-        onDateChange(ranges.selection.startDate, ranges.selection.endDate);
-        onFilterChange(ranges.selection.startDate, ranges.selection.endDate);
+    const handleSelect = (ranges: RangeKeyDict) => {
+        const selection = ranges["selection"]
+
+        setDateRange(selection)
+
+        onDateChange(selection.startDate ?? null, selection.endDate ?? null)
+        onFilterChange(selection.startDate ?? null, selection.endDate ?? null)
     }
 
     const handleClearFilter = () => {
