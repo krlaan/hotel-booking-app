@@ -5,6 +5,11 @@ export const api = axios.create({
     baseURL: 'http://localhost:9192',
 })
 
+interface ErrorResponse {
+    message?: string;
+    [key: string]: unknown;
+}
+
 // This function add a new room to the database
 export async function addRoom(photo: File, roomType: string, roomPrice: string) {
     const formData = new FormData();
@@ -87,13 +92,13 @@ export async function bookRoom(roomId: string, booking: {
     try {
         const result = await api.post<string>(`/bookings/room/${roomId}/booking`, booking);
         return result.data;
+
     } catch (err: unknown) {
-        const error = err as AxiosError;
+        const error = err as AxiosError<ErrorResponse>;
 
         if (error.response?.data) {
             const errorData = error.response.data;
-            // Handle both string and object error responses
-            const errorMessage = typeof errorData === 'string' ? errorData : (errorData as any).message || String(errorData);
+            const errorMessage = errorData.message ?? JSON.stringify(errorData);
             throw new Error(errorMessage);
         } else if (error.message) {
             throw new Error(`Error booking room: ${error.message}`);
