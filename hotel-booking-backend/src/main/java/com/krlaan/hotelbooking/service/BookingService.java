@@ -1,6 +1,7 @@
 package com.krlaan.hotelbooking.service;
 
 import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
+import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.repository.BookingRepository;
@@ -27,8 +28,9 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
+    public BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode)
+                .orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code:" + confirmationCode));
     }
 
     @Override

@@ -1,7 +1,7 @@
 import type {Room} from "./Room.ts";
 
 export type Booking = {
-    id: number;
+    id: string;
     checkInDate: string;
     checkOutDate: string;
     guestFullName: string;

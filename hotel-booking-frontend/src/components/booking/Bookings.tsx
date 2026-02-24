@@ -20,7 +20,7 @@ const Bookings = () => {
         }, 1000)
     }, [])
 
-    const handleBookingCancellation = async (bookingId: number) => {
+    const handleBookingCancellation = async (bookingId: string) => {
         try {
             await cancelBooking(bookingId);
             const data = await getAllBookings();

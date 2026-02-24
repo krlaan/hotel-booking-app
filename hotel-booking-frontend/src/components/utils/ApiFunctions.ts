@@ -115,7 +115,7 @@ export async function getAllBookings() {
 }
 
 // This function gets booking by the confirmation code
-export async function getBookingByConfirmationCode(confirmationCode: number) {
+export async function getBookingByConfirmationCode(confirmationCode: string) {
     try {
         const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
         return result.data;
@@ -126,7 +126,7 @@ export async function getBookingByConfirmationCode(confirmationCode: number) {
 }
 
 // This function cancels booking form the database
-export async function cancelBooking(bookingId: number) {
+export async function cancelBooking(bookingId: string) {
     try {
         const result = await api.delete(`/bookings/booking/${bookingId}/delete`);
         return result.data;

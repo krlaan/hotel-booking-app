@@ -1,6 +1,7 @@
 package com.krlaan.hotelbooking.controller;
 
 import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
+import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.response.BookingResponse;
@@ -37,7 +38,7 @@ public class BookingController {
     }
 
     @GetMapping("/confirmation/{confirmationCode}")
-    public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) {
+    public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) throws ResourceNotFoundException {
         BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
         BookingResponse bookingResponse = getBookingResponse(booking);
 

@@ -5,7 +5,7 @@ import type {Booking} from "../../types/Booking.ts";
 
 type Props = {
     bookingInfo: Booking[];
-    handleBookingCancellation: (bookingId: number) => void;
+    handleBookingCancellation: (bookingId: string) => void;
 };
 
 const BookingsTable = ({bookingInfo, handleBookingCancellation}: Props) => {

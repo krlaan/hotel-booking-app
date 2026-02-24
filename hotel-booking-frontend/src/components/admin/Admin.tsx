@@ -9,6 +9,7 @@ const Admin = () => {
             <Link to={"/rooms"}>
                 Manage Rooms
             </Link>
+            <br />
             <Link to={"/bookings"}>
                 Manage Bookings
             </Link>
