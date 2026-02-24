@@ -19,8 +19,7 @@ const EditRoom = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const {roomId: roomIdParam} = useParams();
-    const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
+    const {roomId} = useParams();
 
     const handleImageChange = (
         e: ChangeEvent<HTMLInputElement>

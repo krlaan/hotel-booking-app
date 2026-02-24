@@ -40,7 +40,7 @@ export async function getAllRooms() {
 }
 
 // This function deletes a room by the id
-export async function deleteRoom(roomId: number) {
+export async function deleteRoom(roomId: string) {
     try {
         const result = await api.delete(`/rooms/delete/room/${roomId}`);
         return result.data;
@@ -51,7 +51,7 @@ export async function deleteRoom(roomId: number) {
 }
 
 // This function updates a room
-export async function updateRoom(roomId: number, photo: File | null, roomType: string, roomPrice: string) {
+export async function updateRoom(roomId: string, photo: File | null, roomType: string, roomPrice: string) {
     const formData = new FormData();
     if (photo instanceof File) {
         formData.append('photo', photo);
@@ -65,7 +65,7 @@ export async function updateRoom(roomId: number, photo: File | null, roomType: s
 }
 
 // This function gets a room by the id
-export async function getRoomById(roomId: number) {
+export async function getRoomById(roomId: string) {
     try {
         const result = await api.get(`/rooms/room/${roomId}`);
         return result.data;
@@ -76,7 +76,7 @@ export async function getRoomById(roomId: number) {
 }
 
 // This function saves a new booking to the database
-export async function bookRoom(roomId: number, booking: {
+export async function bookRoom(roomId: string, booking: {
     guestFullName: string;
     guestEmail: string;
     checkInDate: string;

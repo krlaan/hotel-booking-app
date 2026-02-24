@@ -54,7 +54,7 @@ const Rooms = () => {
         setCurrentPage(pageNumber);
     }
 
-    const handleDeleteRoom = async (roomId: number) => {
+    const handleDeleteRoom = async (roomId: string) => {
         try {
             const result = await deleteRoom(roomId);
             if (result === "") {

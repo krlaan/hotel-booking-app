@@ -19,8 +19,7 @@ const BookingForm = () => {
         numOfChildren: 0,
     });
 
-    const {roomId: roomIdParam} = useParams();
-    const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
+    const {roomId} = useParams();
 
     const navigate = useNavigate();
 

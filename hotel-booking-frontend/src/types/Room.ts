@@ -1,5 +1,5 @@
 export type Room = {
-    id: number;
+    id: string;
     roomType: string;
     roomPrice: string;
     photo: string;
