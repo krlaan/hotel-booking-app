@@ -49,6 +49,8 @@ public class BookedRoom {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @PrePersist
+    @PreUpdate
     public void calculateTotalNumOfGuest() {
         if (this.numOfAdults != null && this.numOfChildren != null) {
             this.totalNumOfGuest = this.numOfAdults + this.numOfChildren;
