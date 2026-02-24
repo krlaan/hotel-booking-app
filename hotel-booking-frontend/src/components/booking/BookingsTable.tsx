@@ -1,11 +1,17 @@
 import {useEffect, useState} from "react";
 import {parseISO} from "date-fns";
 import DateSlider from "../common/DateSlider.tsx";
+import type {Booking} from "../../types/Booking.ts";
 
-const BookingsTable = ({bookingInfo, handleBookingCancellation}) => {
+type Props = {
+    bookingInfo: Booking[];
+    handleBookingCancellation: (bookingId: number) => void;
+};
+
+const BookingsTable = ({bookingInfo, handleBookingCancellation}: Props) => {
     const [filteredBookings, setFilteredBookings] = useState(bookingInfo);
 
-    const filterBookings = (startDate, endDate) => {
+    const filterBookings = (startDate: Date | null, endDate: Date | null) => {
         let filtered = bookingInfo;
         if (startDate && endDate) {
             filtered = bookingInfo.filter((booking) => {

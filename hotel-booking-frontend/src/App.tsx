@@ -10,6 +10,7 @@ import RoomListing from "./components/room/RoomListing.tsx";
 import Admin from "./components/admin/Admin.tsx";
 import Checkout from "./components/booking/Checkout.tsx";
 import BookingSuccess from "./components/booking/BookingSuccess.tsx";
+import Bookings from "./components/booking/Bookings.tsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/browse-all-rooms" element={<RoomListing />} />
                     <Route path="/admin" element={<Admin />} />
                     <Route path="/booking-success" element={<BookingSuccess />} />
+                    <Route path="/bookings" element={<Bookings />} />
                 </Routes>
             </main>
             <Footer />
