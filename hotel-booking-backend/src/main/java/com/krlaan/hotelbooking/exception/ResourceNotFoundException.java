@@ -1,6 +1,6 @@
 package com.krlaan.hotelbooking.exception;
 
-public class ResourceNotFoundException extends Throwable {
+public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
