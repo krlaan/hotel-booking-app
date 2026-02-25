@@ -12,6 +12,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,23 +23,8 @@ public class RoomService implements IRoomService {
     private final RoomRepository roomRepository;
 
     @Override
-    public Room addNewRoom(MultipartFile file, String roomType, Double roomPrice) throws SQLException, IOException {
-        Room room = new Room();
-        room.setRoomType(roomType);
-        room.setRoomPrice(roomPrice);
-
-        if (!file.isEmpty()) {
-            byte[] photoBytes = file.getBytes();
-            Blob photoBlob = new SerialBlob(photoBytes);
-            room.setPhoto(photoBlob);
-        }
-
-        return roomRepository.save(room);
-    }
-
-    @Override
-    public List<String> getAllRoomTypes() {
-        return roomRepository.findDistinctRoomTypes();
+    public List<Room> getAllRooms() {
+        return roomRepository.findAll();
     }
 
     @Override
@@ -47,8 +33,13 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
+    public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType) {
+        return roomRepository.findAvailableRoomsByDatesAndType(checkInDate, checkOutDate, roomType);
+    }
+
+    @Override
+    public List<String> getAllRoomTypes() {
+        return roomRepository.findDistinctRoomTypes();
     }
 
     @Override
@@ -65,6 +56,21 @@ public class RoomService implements IRoomService {
         }
 
         return null;
+    }
+
+    @Override
+    public Room addNewRoom(MultipartFile file, String roomType, Double roomPrice) throws SQLException, IOException {
+        Room room = new Room();
+        room.setRoomType(roomType);
+        room.setRoomPrice(roomPrice);
+
+        if (!file.isEmpty()) {
+            byte[] photoBytes = file.getBytes();
+            Blob photoBlob = new SerialBlob(photoBytes);
+            room.setPhoto(photoBlob);
+        }
+
+        return roomRepository.save(room);
     }
 
     @Override
