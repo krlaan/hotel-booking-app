@@ -36,7 +36,7 @@ const Bookings = () => {
     }
 
     return (
-        <section className="container" style={{ background: "whitesmoke" }}>
+        <section style={{ background: "whitesmoke" }}>
             <Header title={"Bookings"} />
             {errorMessage && (
                 <div className="text-danger">{errorMessage}</div>
