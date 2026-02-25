@@ -3,7 +3,7 @@ import {getRoomTypes} from "../utils/ApiFunctions.ts";
 
 type Props = {
     newRoom: { roomType: string };
-    handleRoomInputChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    handleRoomInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 };
 
 const RoomTypeSelector = ({handleRoomInputChange, newRoom}: Props) => {

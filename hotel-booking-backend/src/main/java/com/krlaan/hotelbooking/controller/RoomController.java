@@ -52,11 +52,7 @@ public class RoomController {
         }).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
     }
 
-    @GetMapping("/room/types")
-    public List<String> getRoomTypes() {
-        return roomService.getAllRoomTypes();
-    }
-
+    @GetMapping("/available-rooms")
     public ResponseEntity<List<RoomResponse>> getAvailableRooms(
             @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
             @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
@@ -71,6 +67,11 @@ public class RoomController {
         } else {
             return ResponseEntity.ok(roomResponses);
         }
+    }
+
+    @GetMapping("/room/types")
+    public List<String> getRoomTypes() {
+        return roomService.getAllRoomTypes();
     }
 
     @PostMapping("/add/new-room")

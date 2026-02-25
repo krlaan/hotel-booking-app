@@ -1,5 +1,5 @@
+import type {AxiosError} from "axios";
 import axios from 'axios';
-import type { AxiosError } from "axios";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -8,29 +8,6 @@ export const api = axios.create({
 interface ErrorResponse {
     message?: string;
     [key: string]: unknown;
-}
-
-// This function add a new room to the database
-export async function addRoom(photo: File, roomType: string, roomPrice: string) {
-    const formData = new FormData();
-    formData.append('photo', photo);
-    formData.append('roomType', roomType);
-    formData.append('roomPrice', roomPrice);
-
-    const result = await api.post('/rooms/add/new-room', formData)
-
-    return result.status === 201; // true or false
-}
-
-// This function gets all room types from the database
-export async function getRoomTypes() {
-    try {
-        const result = await api.get("/rooms/room/types");
-        return result.data;
-
-    } catch {
-         throw new Error("Error fetching room types");
-    }
 }
 
 // This function gets all rooms from the database
@@ -44,15 +21,46 @@ export async function getAllRooms() {
     }
 }
 
-// This function deletes a room by the id
-export async function deleteRoom(roomId: string) {
+// This function gets a room by the id
+export async function getRoomById(roomId: string) {
     try {
-        const result = await api.delete(`/rooms/delete/room/${roomId}`);
+        const result = await api.get(`/rooms/room/${roomId}`);
         return result.data;
 
     } catch {
-        throw new Error("Error deleting room with id " + roomId);
+        throw new Error("Error fetching room with id " + roomId);
     }
+}
+
+/* This function gets all available rooms from the database with a given date and a room type */
+export async function getAvailableRooms(checkInDate: string, checkOutDate: string, roomType: string) {
+    return await api.get(
+        `rooms/available-rooms?checkInDate=${checkInDate}
+		&checkOutDate=${checkOutDate}&roomType=${roomType}`
+    );
+}
+
+// This function gets all room types from the database
+export async function getRoomTypes() {
+    try {
+        const result = await api.get("/rooms/room/types");
+        return result.data;
+
+    } catch {
+        throw new Error("Error fetching room types");
+    }
+}
+
+// This function add a new room to the database
+export async function addRoom(photo: File, roomType: string, roomPrice: string) {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    formData.append('roomType', roomType);
+    formData.append('roomPrice', roomPrice);
+
+    const result = await api.post('/rooms/add/new-room', formData)
+
+    return result.status === 201; // true or false
 }
 
 // This function updates a room
@@ -69,14 +77,14 @@ export async function updateRoom(roomId: string, photo: File | null, roomType: s
     return result.data;
 }
 
-// This function gets a room by the id
-export async function getRoomById(roomId: string) {
+// This function deletes a room by the id
+export async function deleteRoom(roomId: string) {
     try {
-        const result = await api.get(`/rooms/room/${roomId}`);
+        const result = await api.delete(`/rooms/delete/room/${roomId}`);
         return result.data;
 
     } catch {
-        throw new Error("Error fetching room with id " + roomId);
+        throw new Error("Error deleting room with id " + roomId);
     }
 }
 
