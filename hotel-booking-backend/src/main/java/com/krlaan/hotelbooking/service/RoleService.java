@@ -8,10 +8,12 @@ import com.krlaan.hotelbooking.repository.RoleRepository;
 import com.krlaan.hotelbooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class RoleService implements IRoleService {
 
@@ -19,7 +21,7 @@ public class RoleService implements IRoleService {
     private final UserRepository userRepository;
 
     @Override
-    public List<Role> getRoles() {
+    public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
@@ -29,14 +31,14 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public Role createRole(Role role) {
+    public void createRole(Role role) {
         String roleName = "ROLE_" + role.getName().toUpperCase();
 
         Role roleInfo = new Role(roleName);
         if (roleRepository.existsByName(role)) {
             throw new RoleAlreadyExistException(roleInfo.getName() + "role already exists!");
         }
-        return roleRepository.save(roleInfo);
+        roleRepository.save(roleInfo);
     }
 
     @Override

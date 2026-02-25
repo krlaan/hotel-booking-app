@@ -24,7 +24,7 @@ public class UserService implements IUserService {
 
     @Override
     public User registerUser(User user) throws UserAlreadyExistException {
-        if (userRepository.existByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistException(user.getEmail() + "already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -36,7 +36,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 

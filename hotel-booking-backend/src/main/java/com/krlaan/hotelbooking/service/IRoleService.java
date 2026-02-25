@@ -6,11 +6,11 @@ import com.krlaan.hotelbooking.model.User;
 import java.util.List;
 
 public interface IRoleService {
-    List<Role> getRoles();
+    List<Role> getAllRoles();
 
     Role getRoleByName(String name);
 
-    Role createRole(Role role);
+    void createRole(Role role);
 
     User addRoleToUser(Long userId, Long roleId);
 
