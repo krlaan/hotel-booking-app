@@ -24,8 +24,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-// Allow CORS requests from the React frontend running on localhost:5173
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rooms")
