@@ -41,6 +41,7 @@ public class BookingController {
     @GetMapping("/user/{email}/bookings")
     public ResponseEntity<List<BookingResponse>> getBookingsByUserEmail(@PathVariable String email) {
         List<BookedRoom> bookings = bookingService.getBookingsByUserEmail(email);
+
         List<BookingResponse> bookingResponses = new ArrayList<>();
         for (BookedRoom booking : bookings) {
             BookingResponse bookingResponse = getBookingResponse(booking);
