@@ -23,7 +23,7 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User registerUser(User user) throws UserAlreadyExistException {
+    public void registerUser(User user) throws UserAlreadyExistException {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistException(user.getEmail() + "already exists");
         }
@@ -32,7 +32,7 @@ public class UserService implements IUserService {
         Role userRole = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(userRole));
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
