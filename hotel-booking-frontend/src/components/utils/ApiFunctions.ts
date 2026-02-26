@@ -5,6 +5,14 @@ export const api = axios.create({
     baseURL: 'http://localhost:9192',
 })
 
+export const getHeader = () => {
+    const token = localStorage.getItem("token");
+    return {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+    }
+}
+
 interface ErrorResponse {
     message?: string;
     [key: string]: unknown;
@@ -147,4 +155,54 @@ export async function cancelBooking(bookingId: string) {
     } catch {
         throw new Error("Error cancelling booking with id " + bookingId);
     }
+}
+
+export async function registration(registration: string) {
+    try {
+        const result = await api.post(`/auth/register-user`, registration);
+        return result.data;
+
+    } catch (err: unknown) {
+        const error = err as AxiosError<ErrorResponse>;
+
+        if (error.response?.data) {
+            const errorData = error.response.data;
+            const errorMessage = errorData.message ?? JSON.stringify(errorData);
+            throw new Error(errorMessage);
+        } else if (error.message) {
+            throw new Error(`Error register user ${error.message}`);
+        } else {
+            throw new Error("Unknown registration error");
+        }
+    }
+}
+
+// TODO: move it to separate file
+interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export async function loginUser(login: LoginRequest) {
+    try {
+        const result = await api.post(`/auth/login`, login);
+
+        if (result.status >= 200 && result.status < 300) {
+            return result.data;
+        } else {
+            return null;
+        }
+    } catch (error: unknown) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function getUserProfile(userId: string, token: string) {
+
+    const response = await api.get(`users/profile/${userId}`, {
+        headers: getHeader()
+    })
+
+    return response.data;
 }
