@@ -14,8 +14,7 @@ const Checkout = () => {
         roomPrice: ""
     });
 
-    const {roomId: roomIdParam} = useParams();
-    const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
+    const {roomId} = useParams();
 
     useEffect(() => {
         setTimeout(() => {

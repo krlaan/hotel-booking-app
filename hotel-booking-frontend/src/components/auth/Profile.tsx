@@ -31,8 +31,8 @@ const Profile = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                if (userId && token) {
-                    const userData = await getUser(userId, token)
+                if (userId) {
+                    const userData = await getUser(userId)
                     setUser(userData)
                 }
             } catch (error) {
@@ -41,13 +41,13 @@ const Profile = () => {
         }
 
         void fetchUser()
-    }, [token, userId])
+    }, [userId])
 
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                if (userId && token) {
-                    const response = await getBookingsByUserId(userId, token)
+                if (userId) {
+                    const response = await getBookingsByUserId(userId)
                     setBookings(response)
                 }
 
@@ -61,7 +61,7 @@ const Profile = () => {
         }
 
         void fetchBookings()
-    }, [token, userId])
+    }, [userId])
 
     const handleDeleteAccount = async () => {
         const confirmed = window.confirm(

@@ -1,27 +1,25 @@
-import {createContext, useState} from "react";
+import { useState, type ReactNode } from "react";
 import jwt_decode from "jwt-decode";
+import { AuthContext, type DecodedToken } from "./AuthContext";
 
-export const AuthContext = createContext({
-    user: null,
-    handleLogin: (token: string) => {},
-    handleLogout: () => {},
-});
+interface RequireAuthProps {
+    children: ReactNode
+}
 
-const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null);
+const AuthProvider = ({children}: RequireAuthProps) => {
+    const [user, setUser] = useState<DecodedToken | null>(null)
 
     const handleLogin = (token: string) => {
-        const decodedToken = jwt_decode(token);
+        const decodedUser = jwt_decode<DecodedToken>(token)
 
-        localStorage.setItem("userId", JSON.stringify(decodedToken.sub));
-        localStorage.setItem("userRole", JSON.stringify(decodedToken.roles));
+        localStorage.setItem("userId", decodedUser.sub);
+        localStorage.setItem("userRole", JSON.stringify(decodedUser.roles));
         localStorage.setItem("token", token);
 
-        setUser(decodedToken);
+        setUser(decodedUser);
     }
 
     const handleLogout = () => {
-
         localStorage.removeItem("userId");
         localStorage.removeItem("userRole");
         localStorage.removeItem("token");
@@ -33,7 +31,7 @@ const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
             {children}
         </AuthContext.Provider>
-    );
+    )
 };
 
 export default AuthProvider;

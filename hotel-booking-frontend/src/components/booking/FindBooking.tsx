@@ -1,4 +1,4 @@
-import {type ChangeEvent, type FormEvent, useState} from "react";
+import {type ChangeEvent, useState} from "react";
 import moment from "moment"
 import {cancelBooking, getBookingByConfirmationCode} from "../utils/ApiFunctions.ts";
 
@@ -44,7 +44,7 @@ const FindBooking = () => {
     }
 
     const handleFormSubmit = async (
-        e: FormEvent<HTMLFormElement>
+        e: ChangeEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
         setIsLoading(true);
