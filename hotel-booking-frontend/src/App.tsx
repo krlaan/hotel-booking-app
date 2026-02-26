@@ -12,6 +12,10 @@ import Checkout from "./components/booking/Checkout.tsx";
 import BookingSuccess from "./components/booking/BookingSuccess.tsx";
 import Bookings from "./components/booking/Bookings.tsx";
 import FindBooking from "./components/booking/FindBooking.tsx";
+import Login from "./components/auth/Login.tsx";
+import Registration from "./components/auth/Registration.tsx";
+import Profile from "./components/auth/Profile.tsx";
+import Logout from "./components/auth/Logout.tsx";
 
 function App() {
   return (
@@ -30,6 +34,12 @@ function App() {
                     <Route path="/booking-success" element={<BookingSuccess />} />
                     <Route path="/bookings" element={<Bookings />} />
                     <Route path="/find-booking" element={<FindBooking />} />
+
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Registration />} />
+
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/logout" element={<Logout />} />
                 </Routes>
             </main>
             <Footer />
