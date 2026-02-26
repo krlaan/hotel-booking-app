@@ -11,11 +11,11 @@ public interface IBookingService {
 
     List<BookedRoom> getAllBookingsByRoomId(Long roomId);
 
+    List<BookedRoom> getBookingsByUserEmail(String email);
+
     BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;
 
     String saveBooking(Long roomId, BookedRoom bookingRequest);
 
     void cancelBooking(Long bookingId);
-
-
 }

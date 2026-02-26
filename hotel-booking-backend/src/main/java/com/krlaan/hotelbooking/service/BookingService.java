@@ -28,6 +28,11 @@ public class BookingService implements IBookingService {
     }
 
     @Override
+    public List<BookedRoom> getBookingsByUserEmail(String email) {
+        return bookingRepository.findByGuestEmail(email);
+    }
+
+    @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
         return bookingRepository.findByBookingConfirmationCode(confirmationCode)
                 .orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code:" + confirmationCode));
