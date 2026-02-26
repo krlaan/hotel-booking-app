@@ -16,34 +16,37 @@ import Login from "./components/auth/Login.tsx";
 import Registration from "./components/auth/Registration.tsx";
 import Profile from "./components/auth/Profile.tsx";
 import Logout from "./components/auth/Logout.tsx";
+import AuthProvider from "./components/auth/AuthProvider.tsx";
 
 function App() {
   return (
     <>
-        <Router>
-            <NavBar />
-            <main>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/edit-room/:roomId" element={<EditRoom />} />
-                    <Route path="/rooms" element={<Rooms />} />
-                    <Route path="/add-room" element={<AddRoom />} />
-                    <Route path="/book-room/:roomId" element={<Checkout />} />
-                    <Route path="/browse-all-rooms" element={<RoomListing />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route path="/booking-success" element={<BookingSuccess />} />
-                    <Route path="/bookings" element={<Bookings />} />
-                    <Route path="/find-booking" element={<FindBooking />} />
+        <AuthProvider>
+            <Router>
+                <NavBar />
+                <main>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/edit-room/:roomId" element={<EditRoom />} />
+                        <Route path="/rooms" element={<Rooms />} />
+                        <Route path="/add-room" element={<AddRoom />} />
+                        <Route path="/book-room/:roomId" element={<Checkout />} />
+                        <Route path="/browse-all-rooms" element={<RoomListing />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/booking-success" element={<BookingSuccess />} />
+                        <Route path="/bookings" element={<Bookings />} />
+                        <Route path="/find-booking" element={<FindBooking />} />
 
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Registration />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Registration />} />
 
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/logout" element={<Logout />} />
-                </Routes>
-            </main>
-            <Footer />
-        </Router>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/logout" element={<Logout />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </Router>
+        </AuthProvider>
     </>
   )
 }

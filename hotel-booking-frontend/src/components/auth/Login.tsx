@@ -1,7 +1,7 @@
-import {type ChangeEvent, useState} from "react";
+import {type ChangeEvent, useContext, useState} from "react";
 import {loginUser} from "../utils/ApiFunctions.ts";
 import {Link, useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import {AuthContext} from "./AuthProvider.tsx";
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -11,6 +11,7 @@ const Login = () => {
     });
 
     const navigate = useNavigate();
+    const { handleLogin } = useContext(AuthContext);
 
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>
@@ -18,7 +19,7 @@ const Login = () => {
         setLogin({...login, [e.target.name]: e.target.value});
     }
 
-    const handleLogin = async (
+    const handleSubmit = async (
         e: ChangeEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
@@ -27,12 +28,7 @@ const Login = () => {
 
         if (success) {
             const token = success.token;
-
-            const decodeToken = jwtDecode(token);
-
-            localStorage.setItem("token", token);
-            localStorage.setItem("userId", decodeToken.sub);
-            localStorage.setItem("userRole", decodeToken.roles.join(","));
+            handleLogin(token);
 
             navigate("/");
             window.location.reload();
@@ -49,7 +45,7 @@ const Login = () => {
             {errorMessage && <p className="alert alert-danger"> {errorMessage} </p>}
 
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
                 <div className="row mb-3">
                     <label htmlFor="email" className="col-sm-2 col-form-label">
                         Email
@@ -91,7 +87,9 @@ const Login = () => {
                         Login
                     </button>
                     <span style={{ marginLeft: "10px" }}>
-                        Don't have an account yet?'<Link to={"/register"}></Link>
+                        Don't have an account yet? <Link to={"/register"}>
+                            Register
+                        </Link>
                     </span>
                 </div>
             </form>
