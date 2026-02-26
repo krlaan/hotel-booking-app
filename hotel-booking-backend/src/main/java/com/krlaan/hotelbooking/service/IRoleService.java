@@ -8,8 +8,6 @@ import java.util.List;
 public interface IRoleService {
     List<Role> getAllRoles();
 
-    Role getRoleByName(String name);
-
     void createRole(Role role);
 
     User addRoleToUser(Long userId, Long roleId);

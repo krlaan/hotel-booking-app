@@ -2,10 +2,8 @@ package com.krlaan.hotelbooking.controller;
 
 import com.krlaan.hotelbooking.exception.PhotoRetrievalException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
-import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.response.RoomResponse;
-import com.krlaan.hotelbooking.service.IBookingService;
 import com.krlaan.hotelbooking.service.IRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,7 +29,6 @@ import java.util.Optional;
 public class RoomController {
 
     private final IRoomService roomService;
-    private final IBookingService bookingService;
 
     @GetMapping("/all-rooms")
     public ResponseEntity<List<RoomResponse>> getAllRooms() throws SQLException, ResourceNotFoundException, PhotoRetrievalException {
@@ -130,16 +127,6 @@ public class RoomController {
     }
 
     private RoomResponse getRoomResponse(Room room) throws PhotoRetrievalException {
-        List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
-
-//        List<BookingResponse> bookingInfo = bookings.
-//                stream().
-//                map(booking -> new BookingResponse(booking.getBookingId(),
-//                        booking.getCheckInDate(),
-//                        booking.getCheckOutDate(),
-//                        booking.getBookingConfirmationCode()))
-//                .toList();
-
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();
 
@@ -158,9 +145,5 @@ public class RoomController {
                 room.getRoomPrice(),
                 room.isBooked(),
                 photoBytes);
-    }
-
-    private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
-        return bookingService.getAllBookingsByRoomId(roomId);
     }
 }

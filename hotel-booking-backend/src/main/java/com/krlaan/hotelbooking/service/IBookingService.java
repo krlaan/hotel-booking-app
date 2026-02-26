@@ -9,8 +9,6 @@ public interface IBookingService {
 
     List<BookedRoom> getAllBookings();
 
-    List<BookedRoom> getAllBookingsByRoomId(Long roomId);
-
     List<BookedRoom> getBookingsByUserEmail(String email);
 
     BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;

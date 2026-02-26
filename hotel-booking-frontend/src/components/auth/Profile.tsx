@@ -26,7 +26,6 @@ const Profile = () => {
     const navigate = useNavigate()
 
     const userId = localStorage.getItem("userId")
-    const token = localStorage.getItem("token")
 
     useEffect(() => {
         const fetchUser = async () => {

@@ -26,11 +26,6 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public Role getRoleByName(String name) {
-        return roleRepository.findByName(name).get();
-    }
-
-    @Override
     public void createRole(Role role) {
         String roleName = "ROLE_" + role.getName().toUpperCase();
 
