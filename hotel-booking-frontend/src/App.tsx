@@ -29,7 +29,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/edit-room/:roomId" element={<EditRoom />} />
-                        <Route path="/existing-rooms" element={<Rooms />} />
+                        <Route path="/rooms" element={<Rooms />} />
                         <Route path="/add-room" element={<AddRoom />} />
 
                         <Route
@@ -44,7 +44,7 @@ function App() {
 
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/booking-success" element={<BookingSuccess />} />
-                        <Route path="/existing-bookings" element={<Bookings />} />
+                        <Route path="/bookings" element={<Bookings />} />
                         <Route path="/find-booking" element={<FindBooking />} />
 
                         <Route path="/login" element={<Login />} />
