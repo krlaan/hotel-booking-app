@@ -15,6 +15,7 @@ export const getHeader = () => {
 
 interface ErrorResponse {
     message?: string;
+
     [key: string]: unknown;
 }
 
@@ -80,7 +81,9 @@ export async function updateRoom(roomId: string, photo: File | null, roomType: s
     formData.append('roomType', roomType);
     formData.append('roomPrice', roomPrice);
 
-    const result = await api.put(`/rooms/update/${roomId}`, formData);
+    const result = await api.put(`/rooms/update/${roomId}`, formData, {
+        headers: getHeader()
+    })
 
     return result.data;
 }
@@ -88,7 +91,9 @@ export async function updateRoom(roomId: string, photo: File | null, roomType: s
 // This function deletes a room by the id
 export async function deleteRoom(roomId: string) {
     try {
-        const result = await api.delete(`/rooms/delete/room/${roomId}`);
+        const result = await api.delete(`/rooms/delete/room/${roomId}`, {
+            headers: getHeader()
+        })
         return result.data;
 
     } catch {
@@ -106,7 +111,10 @@ export async function bookRoom(roomId: string, booking: {
     numOfChildren: number
 }) {
     try {
-        const result = await api.post<string>(`/bookings/room/${roomId}/booking`, booking);
+        const result = await api.post(`/bookings/room/${roomId}/booking`,
+            booking, {
+            headers: getHeader()
+        });
         return result.data;
 
     } catch (err: unknown) {
@@ -127,7 +135,9 @@ export async function bookRoom(roomId: string, booking: {
 // This function gets all bookings from the database
 export async function getAllBookings() {
     try {
-        const result = await api.get("/bookings/all-bookings");
+        const result = await api.get("/bookings/all-bookings", {
+            headers: getHeader()
+        })
         return result.data;
 
     } catch {
@@ -138,7 +148,9 @@ export async function getAllBookings() {
 // This function gets booking by the confirmation code
 export async function getBookingByConfirmationCode(confirmationCode: string) {
     try {
-        const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
+        const result = await api.get(`/bookings/confirmation/${confirmationCode}`, {
+            headers: getHeader()
+        });
         return result.data;
 
     } catch {
@@ -149,7 +161,9 @@ export async function getBookingByConfirmationCode(confirmationCode: string) {
 // This function cancels booking form the database
 export async function cancelBooking(bookingId: string) {
     try {
-        const result = await api.delete(`/bookings/booking/${bookingId}/delete`);
+        const result = await api.delete(`/bookings/booking/${bookingId}/delete`, {
+            headers: getHeader()
+        });
         return result.data;
 
     } catch {
@@ -165,6 +179,7 @@ interface RegistrationRequest {
     password: string,
 }
 
+/* This function register a new user */
 export async function registerUser(registration: RegistrationRequest) {
     try {
         const result = await api.post(`/auth/register-user`, registration);
@@ -191,6 +206,7 @@ interface LoginRequest {
     password: string;
 }
 
+/* This function login a registered user */
 export async function loginUser(login: LoginRequest) {
     try {
         const result = await api.post(`/auth/login`, login);
@@ -206,16 +222,8 @@ export async function loginUser(login: LoginRequest) {
     }
 }
 
-export async function getUserProfile(userId: string, token: string) {
-    const response = await api.get(`users/profile/${userId}`, {
-        headers: getHeader()
-    })
-
-    return response.data;
-}
-
 /* This is the function to get a single user */
-export async function getUser(userId: string, token: string) {
+export async function getUser(userId: string) {
     try {
         const result = await api.get(`/users/${userId}`, {
             headers: getHeader()
@@ -243,7 +251,7 @@ export async function deleteUser(userId: string) {
 }
 
 /* This is the function to get user bookings by the user id */
-export async function getBookingsByUserId(userId: string, token: string) {
+export async function getBookingsByUserId(userId: string) {
     try {
         const response = await api.get(`/bookings/user/${userId}/bookings`, {
             headers: getHeader()
