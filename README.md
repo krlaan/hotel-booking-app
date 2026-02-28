@@ -1,4 +1,4 @@
-# 🏨 Hotel Booking Application
+# 🏨 Hotel Booking Application (design and project structure will be updated)
 
 A full-stack hotel reservation system with secure JWT authentication, Spring Boot REST API, and React TypeScript frontend.
 
