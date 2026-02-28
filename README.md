@@ -1,5 +1,5 @@
-# 🏨 Hotel Booking Application (design and project structure will be updated)
-
+# 🏨 Hotel Booking Application 
+(design and project structure will be updated)
 A full-stack hotel reservation system with secure JWT authentication, Spring Boot REST API, and React TypeScript frontend.
 
 This project demonstrates a complete modern web application with user authentication, room browsing, booking management, and admin controls. The backend provides RESTful APIs with Spring Security, while the frontend offers a responsive UI.
