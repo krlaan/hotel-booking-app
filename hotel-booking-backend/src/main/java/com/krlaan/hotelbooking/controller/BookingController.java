@@ -4,6 +4,7 @@ import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
+import com.krlaan.hotelbooking.request.BookingRequest;
 import com.krlaan.hotelbooking.response.BookingResponse;
 import com.krlaan.hotelbooking.response.RoomResponse;
 import com.krlaan.hotelbooking.service.IBookingService;
@@ -62,9 +63,18 @@ public class BookingController {
     @PostMapping("/room/{roomId}/booking")
     public ResponseEntity<?> saveBooking(
             @PathVariable Long roomId,
-            @RequestBody BookedRoom bookingRequest) {
+            @RequestBody BookingRequest bookingRequest) {
         try {
-            String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
+            BookedRoom bookedRoom = new BookedRoom();
+            bookedRoom.setCheckInDate(bookingRequest.getCheckInDate());
+            bookedRoom.setCheckOutDate(bookingRequest.getCheckOutDate());
+            bookedRoom.setGuestFullName(bookingRequest.getGuestFullName());
+            bookedRoom.setGuestEmail(bookingRequest.getGuestEmail());
+            bookedRoom.setNumOfAdults(bookingRequest.getNumOfAdults());
+            bookedRoom.setNumOfChildren(bookingRequest.getNumOfChildren());
+            bookedRoom.setTotalNumOfGuest(bookingRequest.getNumOfAdults() + bookingRequest.getNumOfChildren());
+
+            String confirmationCode = bookingService.saveBooking(roomId, bookedRoom);
             return ResponseEntity.ok("Room booked successfully! Your confirmation code is: " + confirmationCode);
 
         } catch (InvalidBookingRequestException e){

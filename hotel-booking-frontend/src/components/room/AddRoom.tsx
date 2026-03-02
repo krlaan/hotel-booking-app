@@ -56,6 +56,12 @@ const AddRoom = () => {
                 return;
             }
 
+            const priceNum = parseFloat(newRoom.roomPrice);
+            if (priceNum <= 0) {
+                setErrorMessage("Room price must be a positive number!");
+                return;
+            }
+
             const success = await addRoom(
                 newRoom.photo,
                 newRoom.roomType,
@@ -126,6 +132,8 @@ const AddRoom = () => {
                                     name="roomPrice"
                                     value={newRoom.roomPrice}
                                     onChange={handleRoomInputChange}
+                                    min="0"
+                                    step="0.01"
                                 />
                             </div>
 
