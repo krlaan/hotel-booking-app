@@ -5,6 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import moment from "moment";
 import {Form, FormControl} from "react-bootstrap";
 import BookingSummary from "./BookingSummary.tsx";
+import { getStorageUserId } from "../../utils/storageUtils";
 
 const BookingForm = () => {
     const [isValidated, setIsValidated] = useState(false);
@@ -12,7 +13,7 @@ const BookingForm = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [roomPrice, setRoomPrice] = useState(0);
 
-    let currentUser = localStorage.getItem("userId")
+    let currentUser = getStorageUserId()
 
     if (!currentUser) {
         currentUser = "";

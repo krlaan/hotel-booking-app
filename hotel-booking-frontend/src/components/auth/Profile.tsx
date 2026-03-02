@@ -3,6 +3,7 @@ import {deleteUser, getUser} from "../../services/UserService.ts";
 import {getBookingsByUserId} from "../../services/BookingService.ts";
 import {useNavigate} from "react-router-dom"
 import moment from "moment"
+import { getStorageUserId, clearStorageAuthData } from "../../utils/storageUtils";
 
 const Profile = () => {
     const [user, setUser] = useState({
@@ -26,7 +27,7 @@ const Profile = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
-    const userId = localStorage.getItem("userId")
+    const userId = getStorageUserId()
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -73,9 +74,7 @@ const Profile = () => {
                     .then((response: { data: string }) => {
                         setMessage(response.data)
 
-                        localStorage.removeItem("token")
-                        localStorage.removeItem("userId")
-                        localStorage.removeItem("userRole")
+                        clearStorageAuthData()
 
                         navigate("/")
                         window.location.reload()

@@ -1,12 +1,13 @@
 import {Navigate, useLocation} from "react-router-dom"
 import type {ReactNode} from "react";
+import { getStorageUserId } from "../../utils/storageUtils";
 
 interface RequireAuthProps {
     children: ReactNode
 }
 
 const RequireAuth = ({children}: RequireAuthProps) => {
-    const user = localStorage.getItem("userId");
+    const user = getStorageUserId();
 
     const location = useLocation();
 

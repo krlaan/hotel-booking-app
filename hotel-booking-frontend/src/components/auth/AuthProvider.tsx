@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import jwt_decode from "jwt-decode";
 import { AuthContext, type DecodedToken } from "../../context/AuthContext.ts";
+import { setStorageUserId, setStorageUserRole, setStorageToken, clearStorageAuthData } from "../../utils/storageUtils";
 
 interface RequireAuthProps {
     children: ReactNode
@@ -12,17 +13,15 @@ const AuthProvider = ({children}: RequireAuthProps) => {
     const handleLogin = (token: string) => {
         const decodedUser = jwt_decode<DecodedToken>(token)
 
-        localStorage.setItem("userId", decodedUser.sub);
-        localStorage.setItem("userRole", JSON.stringify(decodedUser.roles));
-        localStorage.setItem("token", token);
+        setStorageUserId(decodedUser.sub);
+        setStorageUserRole(JSON.stringify(decodedUser.roles));
+        setStorageToken(token);
 
         setUser(decodedUser);
     }
 
     const handleLogout = () => {
-        localStorage.removeItem("userId");
-        localStorage.removeItem("userRole");
-        localStorage.removeItem("token");
+        clearStorageAuthData();
 
         setUser(null);
     }

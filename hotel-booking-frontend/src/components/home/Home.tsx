@@ -4,12 +4,13 @@ import Parallax from "../common/Parallax.tsx";
 import RoomCarousel from "../common/RoomCarousel.tsx";
 import RoomSearch from "../common/RoomSearch.tsx";
 import {useLocation} from "react-router-dom";
+import { getStorageUserId } from "../../utils/storageUtils";
 
 const Home = () => {
     const location = useLocation();
     const message = location.state && location.state.message;
 
-    const currentUser = localStorage.getItem("userId");
+    const currentUser = getStorageUserId();
 
     return (
         <section>

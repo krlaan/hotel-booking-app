@@ -1,6 +1,7 @@
 import {useState} from "react"
 import {NavLink, Link} from "react-router-dom"
 import Logout from "../auth/Logout.tsx";
+import { getStorageToken, getStorageUserRole } from "../../utils/storageUtils";
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
@@ -9,8 +10,8 @@ const NavBar = () => {
         setShowAccount(!showAccount)
     }
 
-    const isLoggedIn = localStorage.getItem("token")
-    const userRole = localStorage.getItem("userRole")
+    const isLoggedIn = getStorageToken()
+    const userRole = getStorageUserRole()
     const isAdmin = userRole?.includes("ROLE_ADMIN")
 
     return (
