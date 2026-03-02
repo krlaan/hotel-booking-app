@@ -1,7 +1,7 @@
 import type {IRoom} from "./IRoom.ts";
+import type {IDomainId} from "./IDomainId.ts";
 
-export interface IBooking {
-    id: string;
+export interface IBooking extends IDomainId {
     checkInDate: string;
     checkOutDate: string;
     guestFullName: string;
