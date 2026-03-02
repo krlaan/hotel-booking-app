@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import type {Room} from "../../types/Room.ts";
+import type {IRoom} from "../../types/IRoom.ts";
 
 type Props = {
-    data: Room[];
-    setFilteredData: (rooms: Room[]) => void;
+    data: IRoom[];
+    setFilteredData: (rooms: IRoom[]) => void;
 };
 
 const RoomFilter = ({data, setFilteredData}: Props) => {

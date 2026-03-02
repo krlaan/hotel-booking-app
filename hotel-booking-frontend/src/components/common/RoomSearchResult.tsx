@@ -2,10 +2,10 @@ import {useState} from "react";
 import {Button, Row} from "react-bootstrap";
 import RoomCard from "../room/RoomCard.tsx";
 import RoomPaginator from "./RoomPaginator.tsx";
-import type {Room} from "../../types/Room.ts";
+import type {IRoom} from "../../types/IRoom.ts";
 
 type Props = {
-    results: Room[],
+    results: IRoom[],
     onClearSearch: () => void,
 }
 

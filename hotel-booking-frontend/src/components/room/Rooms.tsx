@@ -2,17 +2,17 @@ import {useEffect, useState} from 'react';
 import {deleteRoom, getAllRooms} from "../utils/ApiFunctions.ts";
 import {Col, Row} from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter.tsx";
-import type {Room} from "../../types/Room.ts";
+import type {IRoom} from "../../types/IRoom.ts";
 import RoomPaginator from "../common/RoomPaginator.tsx";
 import {FaEdit, FaEye, FaPlus, FaTrashAlt} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Rooms = () => {
-    const [rooms, setRooms] = useState<Room[]>([]);
+    const [rooms, setRooms] = useState<IRoom[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(8);
     const [isLoading, setIsLoading] = useState(false);
-    const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
+    const [filteredRooms, setFilteredRooms] = useState<IRoom[]>([]);
     const [selectedRoomType] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -78,7 +78,7 @@ const Rooms = () => {
     }
 
     const calculateTotalPages = (
-        filteredRooms: Room[], roomsPerPage: number, rooms: Room[]
+        filteredRooms: IRoom[], roomsPerPage: number, rooms: IRoom[]
     ) => {
         const totalPages = filteredRooms.length > 0 ? filteredRooms.length : rooms.length;
         return Math.ceil(totalPages / roomsPerPage);

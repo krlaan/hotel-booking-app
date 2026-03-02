@@ -1,6 +1,6 @@
-import type {Room} from "./Room.ts";
+import type {IRoom} from "./IRoom.ts";
 
-export type Booking = {
+export interface IBooking {
     id: string;
     checkInDate: string;
     checkOutDate: string;
@@ -10,5 +10,5 @@ export type Booking = {
     numOfChildren: number;
     totalNumOfGuest: number;
     bookingConfirmationCode: string;
-    room : Room;
-};
+    room : IRoom;
+}

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {getAllRooms} from "../utils/ApiFunctions.ts";
 import RoomCard from "./RoomCard.tsx";
-import type {Room as RoomType} from "../../types/Room.ts";
+import type {IRoom as RoomType} from "../../types/IRoom.ts";
 import {Col, Container, Row} from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter.tsx";
 import RoomPaginator from "../common/RoomPaginator.tsx";

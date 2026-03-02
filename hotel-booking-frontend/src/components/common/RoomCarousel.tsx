@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import type {Room} from "../../types/Room.ts";
+import type {IRoom} from "../../types/IRoom.ts";
 import {getAllRooms} from "../utils/ApiFunctions.ts";
 import {Link} from "react-router-dom";
 import {Card, Carousel, Col, Container, Row} from "react-bootstrap";
 
 const RoomCarousel = () => {
-    const [rooms, setRooms] = useState<Room[]>([]);
+    const [rooms, setRooms] = useState<IRoom[]>([]);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 

@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {parseISO} from "date-fns";
 import DateSlider from "../common/DateSlider.tsx";
-import type {Booking} from "../../types/Booking.ts";
+import type {IBooking} from "../../types/IBooking.ts";
 
 type Props = {
-    bookingInfo: Booking[];
+    bookingInfo: IBooking[];
     handleBookingCancellation: (bookingId: string) => void;
 };
 

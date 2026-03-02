@@ -1,9 +1,9 @@
 import {Card, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import type {Room} from "../../types/Room.ts";
+import type {IRoom} from "../../types/IRoom.ts";
 
 type RoomCardProps = {
-    room: Room;
+    room: IRoom;
 };
 
 const RoomCard = ({room}: RoomCardProps) => {

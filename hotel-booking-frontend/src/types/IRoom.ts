@@ -1,4 +1,4 @@
-export type Room = {
+export interface IRoom {
     id: string;
     roomType: string;
     roomPrice: string;
