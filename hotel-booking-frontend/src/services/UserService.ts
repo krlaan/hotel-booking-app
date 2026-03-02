@@ -1,11 +1,9 @@
-import { api, getAuthHeader } from './BaseService.ts';
+import { api } from './BaseService.ts';
 
 /* This is the function to get a single user */
 export async function getUser(userId: string) {
     try {
-        const result = await api.get(`/users/${userId}`, {
-            headers: getAuthHeader()
-        });
+        const result = await api.get(`/users/${userId}`);
         return result.data;
 
     } catch {
@@ -16,9 +14,7 @@ export async function getUser(userId: string) {
 /* This is the function to delete a user */
 export async function deleteUser(userId: string) {
     try {
-        const result = await api.delete(`/users/delete/${userId}`, {
-            headers: getAuthHeader()
-        });
+        const result = await api.delete(`/users/delete/${userId}`);
         return result.data;
 
     } catch {
