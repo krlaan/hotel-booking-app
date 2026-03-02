@@ -1,5 +1,5 @@
 import {type ChangeEvent, useState} from 'react'
-import {addRoom} from "../utils/ApiFunctions.ts";
+import {addRoom} from "../../services/RoomService.ts";
 import RoomTypeSelector from "../common/RoomTypeSelector.tsx";
 import {Link} from "react-router-dom";
 

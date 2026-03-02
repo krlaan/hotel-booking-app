@@ -1,6 +1,6 @@
 import {type ChangeEvent, useState} from "react";
 import moment from "moment"
-import {getAvailableRooms} from "../utils/ApiFunctions.ts";
+import {getAvailableRooms} from "../../services/RoomService.ts";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import RoomTypeSelector from "./RoomTypeSelector.tsx";
 import RoomSearchResult from "./RoomSearchResult.tsx";

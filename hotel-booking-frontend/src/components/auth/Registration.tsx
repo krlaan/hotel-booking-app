@@ -1,5 +1,5 @@
 import {type ChangeEvent, useState} from "react";
-import {registerUser} from "../utils/ApiFunctions.ts";
+import {registerUser} from "../../services/AuthService.ts";
 import {Link} from "react-router-dom";
 
 const Registration = () => {

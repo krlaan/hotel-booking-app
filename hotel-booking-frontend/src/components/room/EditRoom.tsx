@@ -1,5 +1,5 @@
 import {type ChangeEvent, useEffect, useState} from "react";
-import {getRoomById, updateRoom} from "../utils/ApiFunctions.ts";
+import {getRoomById, updateRoom} from "../../services/RoomService.ts";
 import {Link, useParams} from "react-router-dom";
 
 type EditRoomData = {

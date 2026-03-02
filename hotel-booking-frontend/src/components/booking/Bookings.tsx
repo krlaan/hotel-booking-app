@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {cancelBooking, getAllBookings} from "../utils/ApiFunctions.ts";
+import {cancelBooking, getAllBookings} from "../../services/BookingService.ts";
 import Header from "../common/Header.tsx";
 import BookingsTable from "./BookingsTable.tsx";
 

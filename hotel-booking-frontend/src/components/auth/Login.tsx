@@ -1,5 +1,5 @@
 import {type ChangeEvent, useContext, useState} from "react";
-import {loginUser} from "../utils/ApiFunctions.ts";
+import {loginUser} from "../../services/AuthService.ts";
 import {Link, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.ts";
 

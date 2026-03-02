@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import type {IRoom} from "../../domain/IRoom.ts";
-import {getAllRooms} from "../utils/ApiFunctions.ts";
+import {getAllRooms} from "../../services/RoomService.ts";
 import {Link} from "react-router-dom";
 import {Card, Carousel, Col, Container, Row} from "react-bootstrap";
 

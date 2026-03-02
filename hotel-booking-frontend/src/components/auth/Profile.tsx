@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react"
-import {deleteUser, getBookingsByUserId, getUser} from "../utils/ApiFunctions"
+import {deleteUser, getUser} from "../../services/UserService.ts";
+import {getBookingsByUserId} from "../../services/BookingService.ts";
 import {useNavigate} from "react-router-dom"
 import moment from "moment"
 

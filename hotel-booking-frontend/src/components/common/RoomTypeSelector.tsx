@@ -1,5 +1,5 @@
 import React, {type ChangeEvent, useEffect, useState} from 'react';
-import {getRoomTypes} from "../utils/ApiFunctions.ts";
+import {getRoomTypes} from "../../services/RoomService.ts";
 
 type Props = {
     newRoom: { roomType: string };

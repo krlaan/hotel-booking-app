@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getAllRooms} from "../utils/ApiFunctions.ts";
+import {getAllRooms} from "../../services/RoomService.ts";
 import RoomCard from "./RoomCard.tsx";
 import type {IRoom as RoomType} from "../../domain/IRoom.ts";
 import {Col, Container, Row} from "react-bootstrap";

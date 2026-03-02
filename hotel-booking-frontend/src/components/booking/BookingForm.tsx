@@ -1,5 +1,6 @@
 import {type ChangeEvent, useEffect, useState} from "react";
-import {bookRoom, getRoomById} from "../utils/ApiFunctions.ts";
+import {bookRoom} from "../../services/BookingService.ts";
+import {getRoomById} from "../../services/RoomService.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import moment from "moment";
 import {Form, FormControl} from "react-bootstrap";

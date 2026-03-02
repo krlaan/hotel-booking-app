@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {deleteRoom, getAllRooms} from "../utils/ApiFunctions.ts";
+import {deleteRoom, getAllRooms} from "../../services/RoomService.ts";
 import {Col, Row} from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter.tsx";
 import type {IRoom} from "../../domain/IRoom.ts";
