@@ -1,7 +1,7 @@
 import {type ChangeEvent, useContext, useState} from "react";
 import {loginUser} from "../utils/ApiFunctions.ts";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "./AuthContext.ts";
+import {AuthContext} from "../../context/AuthContext.ts";
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import type {IRoom} from "../../types/IRoom.ts";
+import type {IRoom} from "../../domain/IRoom.ts";
 
 type Props = {
     data: IRoom[];

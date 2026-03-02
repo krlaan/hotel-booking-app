@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import jwt_decode from "jwt-decode";
-import { AuthContext, type DecodedToken } from "./AuthContext";
+import { AuthContext, type DecodedToken } from "../../context/AuthContext.ts";
 
 interface RequireAuthProps {
     children: ReactNode

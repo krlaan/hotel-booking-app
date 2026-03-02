@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {deleteRoom, getAllRooms} from "../utils/ApiFunctions.ts";
 import {Col, Row} from "react-bootstrap";
 import RoomFilter from "../common/RoomFilter.tsx";
-import type {IRoom} from "../../types/IRoom.ts";
+import type {IRoom} from "../../domain/IRoom.ts";
 import RoomPaginator from "../common/RoomPaginator.tsx";
 import {FaEdit, FaEye, FaPlus, FaTrashAlt} from "react-icons/fa";
 import { Link } from "react-router-dom";

@@ -1,5 +1,7 @@
 import type {AxiosError} from "axios";
 import axios from 'axios';
+import type {ILoginDto} from "../../types/ILoginDto.ts";
+import type {IRegisterDto} from "../../types/IRegisterDto.ts";
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192',
@@ -171,16 +173,8 @@ export async function cancelBooking(bookingId: string) {
     }
 }
 
-// TODO: move it to separate file
-interface RegistrationRequest {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-}
-
 /* This function register a new user */
-export async function registerUser(registration: RegistrationRequest) {
+export async function registerUser(registration: IRegisterDto) {
     try {
         const result = await api.post(`/auth/register-user`, registration);
         return result.data;
@@ -200,14 +194,8 @@ export async function registerUser(registration: RegistrationRequest) {
     }
 }
 
-// TODO: move it to separate file
-interface LoginRequest {
-    email: string;
-    password: string;
-}
-
 /* This function login a registered user */
-export async function loginUser(login: LoginRequest) {
+export async function loginUser(login: ILoginDto) {
     try {
         const result = await api.post(`/auth/login`, login);
 

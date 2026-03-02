@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Button, Row} from "react-bootstrap";
 import RoomCard from "../room/RoomCard.tsx";
 import RoomPaginator from "./RoomPaginator.tsx";
-import type {IRoom} from "../../types/IRoom.ts";
+import type {IRoom} from "../../domain/IRoom.ts";
 
 type Props = {
     results: IRoom[],

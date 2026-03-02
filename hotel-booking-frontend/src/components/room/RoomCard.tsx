@@ -1,6 +1,6 @@
 import {Card, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import type {IRoom} from "../../types/IRoom.ts";
+import type {IRoom} from "../../domain/IRoom.ts";
 
 type RoomCardProps = {
     room: IRoom;
