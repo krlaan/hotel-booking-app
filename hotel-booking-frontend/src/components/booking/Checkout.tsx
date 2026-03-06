@@ -41,7 +41,7 @@ const Checkout = () => {
                     setIsLoading(false);
                 });
             }
-        }, 2000)
+        }, 300)
     }, [roomId]);
 
     const handleBookingSubmit = (booking: BookingData, calculatedPayment: number) => {
@@ -146,7 +146,7 @@ const Checkout = () => {
                         <button onClick={closeModal} className="modal-close-button">
                             ×
                         </button>
-                        <BookingSummary 
+                        <BookingSummary
                             booking={bookingData}
                             payment={payment}
                             isFormValid={true}

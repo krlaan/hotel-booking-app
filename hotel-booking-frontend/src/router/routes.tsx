@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import Home from '../components/home/Home.tsx';
-import Rooms from '../components/room/Rooms.tsx';
+import RoomsManagement from '../components/room/RoomsManagement.tsx';
 import EditRoom from '../components/room/EditRoom.tsx';
 import AddRoom from '../components/room/AddRoom.tsx';
 import RoomListing from '../components/room/RoomListing.tsx';
-import Admin from '../components/admin/Admin.tsx';
+import AdminDashboard from '../components/admin/AdminDashboard.tsx';
 import Checkout from '../components/booking/Checkout.tsx';
 import BookingSuccess from '../components/booking/BookingSuccess.tsx';
 import Bookings from '../components/booking/Bookings.tsx';
@@ -34,7 +34,7 @@ const routes: RouteConfig[] = [
         path: '/rooms',
         element: (
             <RequireAdminAuth>
-                <Rooms />
+                <RoomsManagement />
             </RequireAdminAuth>
         ),
         meta: { requiresAuth: true, requiresAdmin: true }
@@ -74,7 +74,7 @@ const routes: RouteConfig[] = [
         path: '/admin',
         element: (
             <RequireAdminAuth>
-                <Admin />
+                <AdminDashboard />
             </RequireAdminAuth>
         ),
         meta: { requiresAuth: true, requiresAdmin: true }

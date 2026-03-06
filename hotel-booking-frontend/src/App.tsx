@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import NavBar from "./components/layout/NavBar.tsx";
 import Footer from "./components/layout/Footer.tsx";
 import AuthProvider from "./components/auth/AuthProvider.tsx";
-import routes from "./router";
+import routes from "./router/routes.tsx";
 
 function App() {
   return (

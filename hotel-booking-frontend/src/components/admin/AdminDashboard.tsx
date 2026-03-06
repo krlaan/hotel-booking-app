@@ -4,7 +4,7 @@ import {getAllRooms} from "../../services/RoomService.ts";
 import {getAllBookings} from "../../services/BookingService.ts";
 import {FaBed, FaCalendarCheck} from "react-icons/fa";
 
-const Admin = () => {
+const AdminDashboard = () => {
     const [stats, setStats] = useState({
         totalRooms: 0,
         totalBookings: 0,
@@ -89,4 +89,4 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default AdminDashboard;

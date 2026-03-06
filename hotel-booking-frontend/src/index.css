@@ -161,7 +161,7 @@ html, body {
     object-fit: cover;
 }
 
-/* Admin Dashboard Styles */
+/* AdminDashboard Dashboard Styles */
 .admin-action-card {
     transition: all 0.3s ease;
     cursor: pointer;

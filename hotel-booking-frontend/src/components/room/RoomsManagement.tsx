@@ -7,7 +7,7 @@ import RoomPaginator from "../shared/RoomPaginator.tsx";
 import {FaEdit, FaPlus, FaTrashAlt} from "react-icons/fa";
 import {Link} from "react-router-dom";
 
-const Rooms = () => {
+const RoomsManagement = () => {
     const [rooms, setRooms] = useState<IRoom[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(4);
@@ -201,4 +201,4 @@ const Rooms = () => {
     );
 };
 
-export default Rooms;
+export default RoomsManagement;
