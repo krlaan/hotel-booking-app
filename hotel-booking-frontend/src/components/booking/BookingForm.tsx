@@ -3,7 +3,7 @@ import {getRoomById} from "../../services/RoomService.ts";
 import {useParams} from "react-router-dom";
 import moment from "moment";
 import {Form, FormControl} from "react-bootstrap";
-import { getStorageUserId } from "../../utils/storageUtils";
+import {getStorageUserId} from "../../utils/storageUtils";
 
 type BookingData = {
     guestFullName: string;
@@ -18,10 +18,12 @@ type BookingFormProps = {
     onBookingSubmit?: (bookingData: BookingData, payment: number) => void;
 };
 
-const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
+const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
     const [isValidated, setIsValidated] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [roomPrice, setRoomPrice] = useState(0);
+    const [roomType, setRoomType] = useState("");
+    const [maxGuests, setMaxGuests] = useState(4);
 
     let currentUser = getStorageUserId()
 
@@ -40,15 +42,42 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
 
     const {roomId} = useParams();
 
+    const getRoomCapacityByType = (type: string): number => {
+        const normalizedType = type.toLowerCase();
+
+        if (normalizedType.includes("single")) {
+            return 1;
+        }
+
+        if (normalizedType.includes("double") ||
+            normalizedType.includes("twin")) {
+            return 2;
+        }
+
+        if (normalizedType.includes("deluxe") ||
+            normalizedType.includes("suite") ||
+            normalizedType.includes("family")) {
+            return 4;
+        }
+
+        // Fallback for unknown/custom room types
+        return 4;
+    }
+
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>
     ) => {
         const {name, value} = e.target;
 
-        // HTML input type="number" returns string, need to parse to number
-        let parsedValue:string | number = value;
+        let parsedValue: string | number = value;
         if (name === "numOfAdults" || name === "numOfChildren") {
-            parsedValue = parseInt(value, 10) || 0;
+            const numericValue = Math.max(0, parseInt(value, 10) || 0);
+
+            const otherGuestCount = name === "numOfAdults" ? booking.numOfChildren : booking.numOfAdults;
+
+            const maxAllowedForCurrentField = Math.max(0, maxGuests - otherGuestCount);
+
+            parsedValue = Math.min(numericValue, maxAllowedForCurrentField);
         }
 
         setBooking({...booking, [name]: parsedValue});
@@ -62,7 +91,12 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
             }
             try {
                 const result = await getRoomById(roomId);
+
                 setRoomPrice(result.roomPrice);
+                setRoomType(result.roomType);
+
+                setMaxGuests(getRoomCapacityByType(result.roomType));
+
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorMessage(error.message);
@@ -80,18 +114,8 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
         const checkOutDate = moment(booking.checkOutDate);
 
         const diffInDays = checkOutDate.diff(checkInDate, 'days');
-        const price = roomPrice ? roomPrice : 0;
 
-        return diffInDays * price;
-    }
-
-    const isGuestCountValid = () => {
-        const adultCount = booking.numOfAdults;
-        const childrenCount = booking.numOfChildren;
-
-        const totalCount = adultCount + childrenCount;
-
-        return totalCount >= 1 && adultCount >= 1;
+        return diffInDays * roomPrice;
     }
 
     const isCheckoutDateValid = () => {
@@ -110,7 +134,7 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
         e.preventDefault();
 
         const form = e.currentTarget;
-        if (!form.checkValidity() || !isGuestCountValid() || !isCheckoutDateValid()) {
+        if (!form.checkValidity() || !isCheckoutDateValid()) {
             e.stopPropagation();
         } else {
             if (onBookingSubmit) {
@@ -167,7 +191,7 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <fieldset style={{ border: "2px" }}>
+                                <fieldset>
                                     <legend>Lodging Period</legend>
                                     <div className="row">
                                         <div className="col-6">
@@ -211,8 +235,12 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
                                     </div>
                                 </fieldset>
 
-                                <fieldset style={{ border: "2px" }}>
+                                <fieldset>
                                     <legend>Number of Guest</legend>
+                                    <p className="text-muted small mb-2">
+                                        Room type: <strong>{roomType || "Selected room"}</strong> | Max
+                                        guests: <strong>{maxGuests}</strong>
+                                    </p>
                                     <div className="row">
                                         <div className="col-6">
                                             <Form.Label htmlFor="numOfAdults" className="hotel-color">
@@ -225,6 +253,7 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
                                                 name="numOfAdults"
                                                 value={booking.numOfAdults}
                                                 min={1}
+                                                max={maxGuests}
                                                 placeholder="0"
                                                 onChange={handleInputChange}
                                             />
@@ -244,6 +273,7 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
                                                 value={booking.numOfChildren}
                                                 placeholder="0"
                                                 min={0}
+                                                max={Math.max(0, maxGuests - booking.numOfAdults)}
                                                 onChange={handleInputChange}
                                             />
                                             <Form.Control.Feedback type="invalid">
@@ -253,8 +283,8 @@ const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
                                     </div>
                                 </fieldset>
 
-                                <div className="fom-group mt-4 mb-2 text-center">
-                                    <button type="submit" className="btn btn-hotel" style={{ minWidth: "150px" }}>
+                                <div className="form-group mt-4 mb-2 text-center">
+                                    <button type="submit" className="btn btn-hotel" style={{minWidth: "150px"}}>
                                         Continue
                                     </button>
                                 </div>
