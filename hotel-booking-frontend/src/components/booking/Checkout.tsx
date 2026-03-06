@@ -31,17 +31,17 @@ const Checkout = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setTimeout(() => {
-            if (roomId != null) {
-                getRoomById(roomId).then((response) => {
-                    setRoomInfo(response);
-                    setIsLoading(false);
-                }).catch((error) => {
-                    setError(error);
-                    setIsLoading(false);
-                });
-            }
-        }, 300)
+
+        if (roomId != null) {
+            getRoomById(roomId).then((response) => {
+                setRoomInfo(response);
+                setIsLoading(false);
+
+            }).catch((error) => {
+                setError(error);
+                setIsLoading(false);
+            });
+        }
     }, [roomId]);
 
     const handleBookingSubmit = (booking: BookingData, calculatedPayment: number) => {
@@ -79,7 +79,7 @@ const Checkout = () => {
             <section className="container">
                 <div className="row align-items-stretch justify-content-center">
                     <div className="col-md-5">
-                        <BookingForm onBookingSubmit={handleBookingSubmit} />
+                        <BookingForm onBookingSubmit={handleBookingSubmit}/>
                     </div>
                     <div className="col-md-4 mt-5 mb-5">
                         {isLoading ? (
@@ -108,25 +108,25 @@ const Checkout = () => {
                                         <td>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <FaWifi /> Wifi
+                                                    <FaWifi/> Wifi
                                                 </li>
                                                 <li>
-                                                    <FaTv /> Netflix Premium
+                                                    <FaTv/> Netflix Premium
                                                 </li>
                                                 <li>
-                                                    <FaUtensils /> Breakfast
+                                                    <FaUtensils/> Breakfast
                                                 </li>
                                                 <li>
-                                                    <FaWineGlassAlt /> Mini bar refreshment
+                                                    <FaWineGlassAlt/> Mini bar refreshment
                                                 </li>
                                                 <li>
-                                                    <FaCar /> Car Service
+                                                    <FaCar/> Car Service
                                                 </li>
                                                 <li>
-                                                    <FaParking /> Parking Space
+                                                    <FaParking/> Parking Space
                                                 </li>
                                                 <li>
-                                                    <FaTshirt /> Laundry
+                                                    <FaTshirt/> Laundry
                                                 </li>
                                             </ul>
                                         </td>
