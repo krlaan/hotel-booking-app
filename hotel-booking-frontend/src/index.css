@@ -215,8 +215,8 @@ html, body {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    width: 100vw;                /* full window width */
-    height: calc(100vh - 56px);  /* viewport minus navbar (~56px) */
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
     margin-top: -2rem;           /* cancel main padding gap */
 }

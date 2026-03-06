@@ -22,7 +22,7 @@ const NavBar = () => {
     const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow sticky-top">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow fixed-top">
             <div className="container-fluid">
                 <Link to={"/"} className="navbar-brand">
                     <span className="hotel-color">LuxeStay Hotel</span>
