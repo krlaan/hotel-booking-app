@@ -1,6 +1,6 @@
 import {type ChangeEvent, useState} from 'react'
 import {addRoom} from "../../services/RoomService.ts";
-import RoomTypeSelector from "../common/RoomTypeSelector.tsx";
+import RoomTypeSelector from "../shared/RoomTypeSelector.tsx";
 import {Link} from "react-router-dom";
 
 type NewRoom = {

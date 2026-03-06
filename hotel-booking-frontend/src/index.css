@@ -1,6 +1,5 @@
 body {
     min-height: 100vh;
-    padding-bottom: 50px;
 }
 .card {
     opacity: 0.9;
@@ -88,7 +87,7 @@ body {
 
 
 .parallax {
-    background-image: url("./assets/images/parrall.jpg");
+    background-image: url("./assets/images/hotel-inside.jpg");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -100,7 +99,7 @@ body {
     position: relative;
     height: 150px;
     background-size: cover;
-    background-image: url("./assets/images/services4.jpg");
+    background-image: url("./assets/images/service.jpg");
     background-position: center center;
 }
 .header-title {
@@ -195,7 +194,7 @@ body {
 
 /* The header banner */
 .header-banner {
-    background-image:  url("./assets/images/services-1.jpg");
+    background-image:  url("./assets/images/hotel-photo.jpg");
     background-size: cover;
     background-position: center;
     position: relative;
@@ -220,7 +219,7 @@ body {
 }
 
 .footer {
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;

@@ -1,8 +1,8 @@
 import MainHeader from "../layout/MainHeader.tsx";
-import HotelService from "../common/HotelService.tsx";
-import Parallax from "../common/Parallax.tsx";
-import RoomCarousel from "../common/RoomCarousel.tsx";
-import RoomSearch from "../common/RoomSearch.tsx";
+import HotelService from "../shared/HotelService.tsx";
+import Parallax from "../shared/Parallax.tsx";
+import RoomCarousel from "../shared/RoomCarousel.tsx";
+import RoomSearch from "../shared/RoomSearch.tsx";
 import {useLocation} from "react-router-dom";
 import { getStorageUserId } from "../../utils/storageUtils";
 

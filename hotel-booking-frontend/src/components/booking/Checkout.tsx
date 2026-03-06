@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {getRoomById} from "../../services/RoomService.ts";
 import {useParams} from "react-router-dom";
 import {FaCar, FaParking, FaTshirt, FaTv, FaUtensils, FaWifi, FaWineGlassAlt} from "react-icons/fa";
-import RoomCarousel from "../common/RoomCarousel.tsx";
+import RoomCarousel from "../shared/RoomCarousel.tsx";
 
 const Checkout = () => {
     const [error, setError] = useState("");

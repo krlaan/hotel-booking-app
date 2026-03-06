@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {parseISO} from "date-fns";
-import DateSlider from "../common/DateSlider.tsx";
+import DateSlider from "../shared/DateSlider.tsx";
 import type {IBooking} from "../../domain/IBooking.ts";
 
 type Props = {

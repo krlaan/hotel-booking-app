@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {deleteRoom, getAllRooms} from "../../services/RoomService.ts";
 import {Col, Row} from "react-bootstrap";
-import RoomFilter from "../common/RoomFilter.tsx";
+import RoomFilter from "../shared/RoomFilter.tsx";
 import type {IRoom} from "../../domain/IRoom.ts";
-import RoomPaginator from "../common/RoomPaginator.tsx";
+import RoomPaginator from "../shared/RoomPaginator.tsx";
 import {FaEdit, FaEye, FaPlus, FaTrashAlt} from "react-icons/fa";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {cancelBooking, getAllBookings} from "../../services/BookingService.ts";
-import Header from "../common/Header.tsx";
+import Header from "../shared/Header.tsx";
 import BookingsTable from "./BookingsTable.tsx";
 
 const Bookings = () => {

@@ -3,8 +3,8 @@ import {getAllRooms} from "../../services/RoomService.ts";
 import RoomCard from "./RoomCard.tsx";
 import type {IRoom as RoomType} from "../../domain/IRoom.ts";
 import {Col, Container, Row} from "react-bootstrap";
-import RoomFilter from "../common/RoomFilter.tsx";
-import RoomPaginator from "../common/RoomPaginator.tsx";
+import RoomFilter from "../shared/RoomFilter.tsx";
+import RoomPaginator from "../shared/RoomPaginator.tsx";
 
 export const Room = () => {
     const [data, setData] = useState<RoomType[]>([]);

@@ -18,7 +18,7 @@ const NavBar = () => {
         <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow sticky-top">
             <div className="container-fluid">
                 <Link to={"/"} className="navbar-brand">
-                    <span className="hotel-color">Hotel Booking System</span>
+                    <span className="hotel-color">LuxeStay Hotel</span>
                 </Link>
 
                 <button

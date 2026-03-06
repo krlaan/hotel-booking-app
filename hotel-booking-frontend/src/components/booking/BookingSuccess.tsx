@@ -1,5 +1,5 @@
 import {useLocation} from "react-router-dom";
-import Header from "../common/Header.tsx";
+import Header from "../shared/Header.tsx";
 
 const BookingSuccess = () => {
     const location = useLocation();
