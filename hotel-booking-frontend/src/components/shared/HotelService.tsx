@@ -1,6 +1,6 @@
 import { Row, Col, Card } from "react-bootstrap"
 import Header from "./Header"
-import {FaClock, FaCocktail, FaParking, FaSnowflake, FaTshirt, FaUtensils, FaWifi} from "react-icons/fa"
+import {FaCocktail, FaParking, FaSnowflake, FaTshirt, FaUtensils, FaWifi} from "react-icons/fa"
 
 const HotelService = () => {
     return (
@@ -10,10 +10,7 @@ const HotelService = () => {
 
                 <Row className="mt-4">
                     <h4 className="text-center">
-                        Services at <span className="hotel-color"> lakeSide - </span>Hotel
-                        <span className="gap-2">
-							<FaClock className="ml-5" /> 24-Hour Front Desk
-						</span>
+                        Services at <span className="hotel-color"> LuxeStay Hotel</span>
                     </h4>
                 </Row>
                 <hr />

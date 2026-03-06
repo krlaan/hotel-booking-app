@@ -1,7 +1,7 @@
 import {useState} from "react"
 import {NavLink, Link} from "react-router-dom"
 import Logout from "../auth/Logout.tsx";
-import { getStorageToken, getStorageUserRole } from "../../utils/storageUtils";
+import { getStorageToken, getStorageUserRole, getStorageUserId } from "../../utils/storageUtils";
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
@@ -12,6 +12,7 @@ const NavBar = () => {
 
     const isLoggedIn = getStorageToken()
     const userRole = getStorageUserRole()
+    const userId = getStorageUserId()
     const isAdmin = userRole?.includes("ROLE_ADMIN")
 
     return (
@@ -50,6 +51,11 @@ const NavBar = () => {
                     </ul>
 
                     <ul className="d-flex navbar-nav">
+                        {isLoggedIn && userId && (
+                            <li className="nav-item d-flex align-items-center me-3">
+                                <span className="navbar-text">Logged in as {userId}</span>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <NavLink className="nav-link" to={"/find-booking"}>
                                 Find my booking

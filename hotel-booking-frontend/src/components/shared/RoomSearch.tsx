@@ -75,7 +75,7 @@ const RoomSearch = () => {
                         <Col xs={12} md={3}>
                             <Form.Group controlId="checkInDate">
                                 <Form.Label>
-                                    Check-In Date
+                                    Check-In
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
@@ -90,7 +90,7 @@ const RoomSearch = () => {
                         <Col xs={12} md={3}>
                             <Form.Group controlId="checkOutDate">
                                 <Form.Label>
-                                    Check-Out Date
+                                    Check-Out
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
@@ -105,13 +105,13 @@ const RoomSearch = () => {
                         <Col xs={12} md={3}>
                             <Form.Group controlId="checkOutDate">
                                 <Form.Label>
-                                    Room Type
+                                    Room
                                 </Form.Label>
                                 <div className="d-flex">
                                     <RoomTypeSelector
                                         newRoom={searchQuery}
                                         handleRoomInputChange={handleInputChange}/>
-                                    <Button variant="secondary" type="submit">
+                                    <Button variant="secondary" className="btn-hotel" type="submit">
                                         Search
                                     </Button>
                                 </div>
