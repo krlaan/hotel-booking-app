@@ -1,5 +1,6 @@
 import {type ChangeEvent, useEffect, useState} from "react";
 import {getRoomById} from "../../services/RoomService.ts";
+import {getBookedDateRangesByRoomId} from "../../services/BookingService.ts";
 import {useParams} from "react-router-dom";
 import moment from "moment";
 import {Form, FormControl} from "react-bootstrap";
@@ -14,6 +15,11 @@ type BookingData = {
     numOfChildren: number;
 };
 
+type BookedDateRange = {
+    checkInDate: string;
+    checkOutDate: string;
+};
+
 type BookingFormProps = {
     onBookingSubmit?: (bookingData: BookingData, payment: number) => void;
 };
@@ -24,8 +30,9 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
     const [roomPrice, setRoomPrice] = useState(0);
     const [roomType, setRoomType] = useState("");
     const [maxGuests, setMaxGuests] = useState(4);
+    const [bookedDateRanges, setBookedDateRanges] = useState<BookedDateRange[]>([]);
 
-    let currentUser = getStorageUserId()
+    let currentUser = getStorageUserId();
 
     if (!currentUser) {
         currentUser = "";
@@ -62,7 +69,21 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
 
         // Fallback for unknown/custom room types
         return 4;
-    }
+    };
+
+    const hasUnavailableDatesInRange = (checkInDate: string, checkOutDate: string): boolean => {
+        const checkIn = moment(checkInDate, "YYYY-MM-DD");
+        const checkOut = moment(checkOutDate, "YYYY-MM-DD");
+
+        return bookedDateRanges.some((range) => {
+            const bookedStart = moment(range.checkInDate, "YYYY-MM-DD");
+            const bookedEnd = moment(range.checkOutDate, "YYYY-MM-DD");
+
+            return (
+                checkIn.isBefore(bookedEnd, "day") && checkOut.isAfter(bookedStart, "day")
+            );
+        });
+    };
 
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>
@@ -82,20 +103,25 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
 
         setBooking({...booking, [name]: parsedValue});
         setErrorMessage("");
-    }
+    };
 
     useEffect(() => {
-        const getRoomPriceById = async () => {
+        const getRoomData = async () => {
             if (roomId == null) {
                 return;
             }
+
             try {
-                const result = await getRoomById(roomId);
+                const [roomResult, bookedRanges] = await Promise.all([
+                    getRoomById(roomId),
+                    getBookedDateRangesByRoomId(roomId),
+                ]);
 
-                setRoomPrice(result.roomPrice);
-                setRoomType(result.roomType);
+                setRoomPrice(roomResult.roomPrice);
+                setRoomType(roomResult.roomType);
 
-                setMaxGuests(getRoomCapacityByType(result.roomType));
+                setMaxGuests(getRoomCapacityByType(roomResult.roomType));
+                setBookedDateRanges(bookedRanges);
 
             } catch (error: unknown) {
                 if (error instanceof Error) {
@@ -106,27 +132,42 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
             }
         };
 
-        void getRoomPriceById();
-    }, [roomId])
+        void getRoomData();
+    }, [roomId]);
 
     const calculatePayment = () => {
         const checkInDate = moment(booking.checkInDate);
         const checkOutDate = moment(booking.checkOutDate);
 
-        const diffInDays = checkOutDate.diff(checkInDate, 'days');
+        const diffInDays = checkOutDate.diff(checkInDate, "days");
 
         return diffInDays * roomPrice;
-    }
+    };
 
-    const isCheckoutDateValid = () => {
-        if (!moment(booking.checkOutDate).isSameOrAfter(moment(booking.checkInDate))) {
-            setErrorMessage("Check-out date must be after check-in date");
+    const isStayPeriodValid = () => {
+        if (!booking.checkInDate || !booking.checkOutDate) {
+            setErrorMessage("Please select both check-in and check-out dates");
             return false;
-        } else {
-            setErrorMessage("");
-            return true;
         }
-    }
+
+        const checkIn = moment(booking.checkInDate, "YYYY-MM-DD");
+        const checkOut = moment(booking.checkOutDate, "YYYY-MM-DD");
+
+        // Check-out must be at least 1 day after check-in
+        const daysDiff = checkOut.diff(checkIn, "days");
+        if (daysDiff < 1) {
+            setErrorMessage("Check-out date must be after check-in date.");
+            return false;
+        }
+
+        if (hasUnavailableDatesInRange(booking.checkInDate, booking.checkOutDate)) {
+            setErrorMessage("Sorry, this room is not available for the selected dates. Please choose different dates.");
+            return false;
+        }
+
+        setErrorMessage("");
+        return true;
+    };
 
     const handleSubmit = (
         e: ChangeEvent<HTMLFormElement>
@@ -134,16 +175,14 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
         e.preventDefault();
 
         const form = e.currentTarget;
-        if (!form.checkValidity() || !isCheckoutDateValid()) {
+        if (!form.checkValidity() || !isStayPeriodValid()) {
             e.stopPropagation();
-        } else {
-            if (onBookingSubmit) {
-                onBookingSubmit(booking, calculatePayment());
-            }
+        } else if (onBookingSubmit) {
+            onBookingSubmit(booking, calculatePayment());
         }
 
         setIsValidated(true);
-    }
+    };
 
     return (
         <>
@@ -191,12 +230,12 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <fieldset>
+                                <fieldset className="mb-2">
                                     <legend>Lodging Period</legend>
                                     <div className="row">
                                         <div className="col-6">
                                             <Form.Label htmlFor="checkInDate" className="hotel-color">
-                                                Check-in date
+                                                Check-in Date
                                             </Form.Label>
                                             <FormControl
                                                 required
@@ -204,18 +243,17 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
                                                 id="checkInDate"
                                                 name="checkInDate"
                                                 value={booking.checkInDate}
-                                                placeholder="check-in-date"
+                                                placeholder="Check-In Date"
                                                 min={moment().format("YYYY-MM-DD")}
                                                 onChange={handleInputChange}
                                             />
                                             <Form.Control.Feedback type="invalid">
-                                                Please select a check in date.
+                                                Please select a check-in date.
                                             </Form.Control.Feedback>
                                         </div>
-
                                         <div className="col-6">
                                             <Form.Label htmlFor="checkOutDate" className="hotel-color">
-                                                Check-out date
+                                                Check-out Date
                                             </Form.Label>
                                             <FormControl
                                                 required
@@ -223,15 +261,14 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
                                                 id="checkOutDate"
                                                 name="checkOutDate"
                                                 value={booking.checkOutDate}
-                                                placeholder="check-out-date"
+                                                placeholder="Check-Out Date"
                                                 min={moment().format("YYYY-MM-DD")}
                                                 onChange={handleInputChange}
                                             />
                                             <Form.Control.Feedback type="invalid">
-                                                Please select a check out date.
+                                                Please select a check-out date.
                                             </Form.Control.Feedback>
                                         </div>
-                                        {errorMessage && <p className="error-message text-danger">{errorMessage}</p>}
                                     </div>
                                 </fieldset>
 
@@ -283,6 +320,8 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
                                     </div>
                                 </fieldset>
 
+                                {errorMessage && <p className="error-message text-danger mt-2">{errorMessage}</p>}
+
                                 <div className="form-group mt-4 mb-2 text-center">
                                     <button type="submit" className="btn btn-hotel" style={{minWidth: "150px"}}>
                                         Continue
@@ -294,7 +333,8 @@ const BookingForm = ({onBookingSubmit}: BookingFormProps) => {
                 </div>
             </div>
         </>
-    )
+    );
 };
 
 export default BookingForm;
+

@@ -73,3 +73,14 @@ export async function getBookingsByUserId(userId: string) {
         throw new Error("Failed to fetch bookings");
     }
 }
+
+// This function gets booked date ranges for a specific room
+export async function getBookedDateRangesByRoomId(roomId: string) {
+    try {
+        const response = await api.get(`/bookings/room/${roomId}/booked-dates`);
+        return response.data;
+
+    } catch {
+        throw new Error("Failed to fetch booked dates for the selected room");
+    }
+}
