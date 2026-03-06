@@ -14,12 +14,14 @@ import Registration from '../components/auth/Registration.tsx';
 import Profile from '../components/auth/Profile.tsx';
 import Logout from '../components/auth/Logout.tsx';
 import RequireAuth from '../components/auth/RequireAuth.tsx';
+import RequireAdminAuth from '../components/auth/RequireAdminAuth.tsx';
 
 export interface RouteConfig {
     path: string;
     element: ReactNode;
     meta?: {
         requiresAuth?: boolean;
+        requiresAdmin?: boolean;
     };
 }
 
@@ -30,15 +32,30 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/rooms',
-        element: <Rooms />
+        element: (
+            <RequireAdminAuth>
+                <Rooms />
+            </RequireAdminAuth>
+        ),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/edit-room/:roomId',
-        element: <EditRoom />
+        element: (
+            <RequireAdminAuth>
+                <EditRoom />
+            </RequireAdminAuth>
+        ),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/add-room',
-        element: <AddRoom />
+        element: (
+            <RequireAdminAuth>
+                <AddRoom />
+            </RequireAdminAuth>
+        ),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/book-room/:roomId',
@@ -55,7 +72,12 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/admin',
-        element: <Admin />
+        element: (
+            <RequireAdminAuth>
+                <Admin />
+            </RequireAdminAuth>
+        ),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/booking-success',
@@ -63,7 +85,12 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/bookings',
-        element: <Bookings />
+        element: (
+            <RequireAdminAuth>
+                <Bookings />
+            </RequireAdminAuth>
+        ),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/find-booking',
@@ -79,7 +106,12 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/profile',
-        element: <Profile />
+        element: (
+            <RequireAuth>
+                <Profile />
+            </RequireAuth>
+        ),
+        meta: { requiresAuth: true }
     },
     {
         path: '/logout',
