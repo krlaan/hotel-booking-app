@@ -323,7 +323,12 @@ html, body {
 
 .footer {
     width: 100%;
-    background-color: #FAF3E0;
+    background-color: #2c2c2c;
     height: 60px;
     text-align: center;
+}
+
+.footer p {
+    margin: 0;
+    color: #f8f9fa;
 }

@@ -4,7 +4,7 @@ import {Col, Row} from "react-bootstrap";
 import RoomFilter from "../shared/RoomFilter.tsx";
 import type {IRoom} from "../../domain/IRoom.ts";
 import RoomPaginator from "../shared/RoomPaginator.tsx";
-import {FaEdit, FaEye, FaPlus, FaTrashAlt} from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrashAlt} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Rooms = () => {
@@ -101,61 +101,95 @@ const Rooms = () => {
             ) : (
                 <>
                     <section className="mt-5 mb-5 container">
-                        <div className="d-flex justify-content-between mb-3 mt-5">
-                            <h2>Rooms</h2>
+                        <div className="text-center mb-4">
+                            <h2 className="hotel-color">Manage Rooms</h2>
+                            <p className="text-muted">View, edit and manage all hotel rooms</p>
+                        </div>
+
+                        {/* Stats Card */}
+                        <div className="row mb-4">
+                            <div className="col-md-4 mb-3">
+                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                    <div className="card-body py-3">
+                                        <h4 className="hotel-color mb-0">{rooms.length}</h4>
+                                        <small className="text-muted">Total Rooms</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-4 mb-3">
+                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                    <div className="card-body py-3">
+                                        <h4 className="hotel-color mb-0">{filteredRooms.length}</h4>
+                                        <small className="text-muted">Filtered Results</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-4 mb-3">
+                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                    <div className="card-body py-3">
+                                        <h4 className="hotel-color mb-0">{new Set(rooms.map(r => r.roomType)).size}</h4>
+                                        <small className="text-muted">Room Types</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <Row>
                             <Col md={6} className="mb-3 mb-md-0">
                                 <RoomFilter data={rooms} setFilteredData={setFilteredRooms}/>
                             </Col>
 
-                            <Col md={6} className="d-flex justify-content-end">
-                                <Link to={"/add-room"}>
-                                    <FaPlus /> Add Room
+                            <Col md={6} className="d-flex justify-content-end align-items-center">
+                                <Link to={"/add-room"} className="btn btn-hotel">
+                                    <FaPlus className="me-2" /> Add New Room
                                 </Link>
                             </Col>
                         </Row>
-                        <table className="table table-bordered table-hover">
-                            <thead>
-                                <tr className="text-center">
-                                    <th>ID</th>
-                                    <th>Room Type</th>
-                                    <th>Room Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                            {currentRooms.map((room) => (
-                                <tr key={room.id} className="text-center">
-                                    <td>{room.id}</td>
-                                    <td>{room.roomType}</td>
-                                    <td>{room.roomPrice}€</td>
-                                    <td className="gap-2">
-                                        <Link to={`/edit-room/${room.id}`}>
-                                            <span className="btn btn-info btn-sm">
-                                                <FaEye />
-                                            </span>
-                                            <span className="btn btn-warning btn-sm">
-                                                <FaEdit />
-                                            </span>
-                                        </Link>
+                        <div className="card shadow-sm border-0">
+                            <div className="card-body p-0">
+                                <table className="table table-hover mb-0">
+                                    <thead style={{backgroundColor: '#f8f9fa'}}>
+                                        <tr className="text-center">
+                                            <th className="py-3">ID</th>
+                                            <th className="py-3">Room Type</th>
+                                            <th className="py-3">Price per Night</th>
+                                            <th className="py-3">Actions</th>
+                                        </tr>
+                                    </thead>
 
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() => handleDeleteRoom(room.id)}
-                                        >
-                                            <FaTrashAlt />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        <RoomPaginator
-                            currentPage={currentPage}
-                            totalPages={calculateTotalPages(filteredRooms, roomsPerPage, rooms)}
-                            onPageChange={handlePaginationClick}/>
+                                    <tbody>
+                                    {currentRooms.map((room) => (
+                                        <tr key={room.id} className="text-center align-middle">
+                                            <td className="fw-bold">{room.id}</td>
+                                            <td>{room.roomType}</td>
+                                            <td>{room.roomPrice}€</td>
+                                            <td>
+                                                <div className="d-flex gap-2 justify-content-center">
+                                                    <Link to={`/edit-room/${room.id}`} className="btn btn-sm btn-outline-warning">
+                                                        <FaEdit className="me-1" /> Edit
+                                                    </Link>
+
+                                                    <button
+                                                        className="btn btn-sm btn-outline-danger"
+                                                        onClick={() => handleDeleteRoom(room.id)}
+                                                    >
+                                                        <FaTrashAlt className="me-1" /> Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <RoomPaginator
+                                currentPage={currentPage}
+                                totalPages={calculateTotalPages(filteredRooms, roomsPerPage, rooms)}
+                                onPageChange={handlePaginationClick}/>
+                        </div>
                     </section>
                 </>
             )}
