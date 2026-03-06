@@ -43,84 +43,93 @@ const Registration = () => {
     }
 
     return (
-        <section className="container col-6 mt-5 mb-5">
-            {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
-            {successMessage && <p className="alert alert-success">{successMessage}</p>}
+        <section className="container mt-4 mb-5">
+            <div className="row justify-content-center">
+                <div className="col-md-8 col-lg-6">
+                    {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
+                    {successMessage && <p className="alert alert-success">{successMessage}</p>}
 
-            <h2>Register</h2>
-            <form onSubmit={handleRegistration}>
-                <div className="mb-3 row">
-                    <label htmlFor="firstName" className="col-sm-2 col-form-label">
-                        First Name
-                    </label>
-                    <div className="col-sm-10">
-                        <input
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            className="form-control"
-                            value={registration.firstName}
-                            onChange={handleInputChange}
-                        />
+                    <div className="card border-0 shadow-sm auth-card">
+                        <div className="card-body p-4 p-md-5">
+                            <h2 className="hotel-color mb-1 text-center">Register</h2>
+                            <p className="text-muted mb-4 text-center">Create your account to continue booking</p>
+
+                            <form onSubmit={handleRegistration}>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label htmlFor="firstName" className="form-label hotel-color fw-semibold">
+                                            First Name
+                                        </label>
+                                        <input
+                                            id="firstName"
+                                            name="firstName"
+                                            type="text"
+                                            className="form-control"
+                                            value={registration.firstName}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="lastName" className="form-label hotel-color fw-semibold">
+                                            Last Name
+                                        </label>
+                                        <input
+                                            id="lastName"
+                                            name="lastName"
+                                            type="text"
+                                            className="form-control"
+                                            value={registration.lastName}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-12">
+                                        <label htmlFor="email" className="form-label hotel-color fw-semibold">
+                                            Email
+                                        </label>
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            className="form-control"
+                                            value={registration.email}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-12">
+                                        <label htmlFor="password" className="form-label hotel-color fw-semibold">
+                                            Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            name="password"
+                                            value={registration.password}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 text-center">
+                                    <button type="submit" className="btn btn-hotel px-4">
+                                        Register
+                                    </button>
+                                    <p className="auth-switch-text mb-0 mt-3">
+                                        Already have an account? <Link to={"/login"}>Login</Link>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-                <div className="mb-3 row">
-                    <label htmlFor="lastName" className="col-sm-2 col-form-label">
-                        Last Name
-                    </label>
-                    <div className="col-sm-10">
-                        <input
-                            id="lastName"
-                            name="lastName"
-                            type="text"
-                            className="form-control"
-                            value={registration.lastName}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-
-                <div className="mb-3 row">
-                    <label htmlFor="email" className="col-sm-2 col-form-label">
-                        Email
-                    </label>
-                    <div className="col-sm-10">
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            className="form-control"
-                            value={registration.email}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-
-                <div className="mb-3 row">
-                    <label htmlFor="password" className="col-sm-2 col-form-label">
-                        Password
-                    </label>
-                    <div className="col-sm-10">
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            value={registration.password}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <button type="submit" className="btn btn-hotel" style={{ marginRight: "10px" }}>
-                        Register
-                    </button>
-                    <span style={{ marginLeft: "10px" }}>
-						Already have an account? <Link to={"/login"}>Login</Link>
-					</span>
-                </div>
-            </form>
+            </div>
         </section>
     )
 };
