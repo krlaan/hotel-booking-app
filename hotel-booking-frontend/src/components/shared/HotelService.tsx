@@ -75,7 +75,6 @@ const HotelService = () => {
                     </Col>
                 </Row>
             </div>
-            <hr />
         </>
     )
 }

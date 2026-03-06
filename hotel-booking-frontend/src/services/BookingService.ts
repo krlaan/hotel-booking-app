@@ -48,7 +48,7 @@ export async function getBookingByConfirmationCode(confirmationCode: string) {
         return result.data;
 
     } catch {
-        throw new Error("Error finding booking with confirmation code: " + confirmationCode);
+        throw new Error("No booking with confirmation code: " + confirmationCode);
     }
 }
 
