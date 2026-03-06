@@ -322,6 +322,32 @@ html, body {
     outline: none;
 }
 
+/* Auth Forms */
+.auth-card {
+    border-radius: 14px;
+    opacity: 1;
+}
+
+.auth-card .form-control:focus {
+    border-color: #8B6508;
+    box-shadow: 0 0 0 0.2rem rgba(139, 101, 8, 0.15);
+}
+
+.auth-switch-text {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.auth-switch-text a {
+    color: #8B6508;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-switch-text a:hover {
+    text-decoration: underline;
+}
+
 /* Edit Room Page */
 .edit-room-preview-image {
     width: 100%;
