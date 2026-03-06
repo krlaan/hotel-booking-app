@@ -101,6 +101,7 @@ const FindBooking = () => {
         <>
             <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
                 <h2>Find My Booking</h2>
+                <br/>
                 <form onSubmit={handleFormSubmit} className="col-md-6">
                     <div className="input-group mb-3">
                         <input

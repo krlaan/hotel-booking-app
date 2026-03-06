@@ -1,15 +1,25 @@
 import {type ChangeEvent, useEffect, useState} from "react";
-import {bookRoom} from "../../services/BookingService.ts";
 import {getRoomById} from "../../services/RoomService.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import moment from "moment";
 import {Form, FormControl} from "react-bootstrap";
-import BookingSummary from "./BookingSummary.tsx";
 import { getStorageUserId } from "../../utils/storageUtils";
 
-const BookingForm = () => {
+type BookingData = {
+    guestFullName: string;
+    guestEmail: string;
+    checkInDate: string;
+    checkOutDate: string;
+    numOfAdults: number;
+    numOfChildren: number;
+};
+
+type BookingFormProps = {
+    onBookingSubmit?: (bookingData: BookingData, payment: number) => void;
+};
+
+const BookingForm = ({ onBookingSubmit }: BookingFormProps) => {
     const [isValidated, setIsValidated] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [roomPrice, setRoomPrice] = useState(0);
 
@@ -29,8 +39,6 @@ const BookingForm = () => {
     });
 
     const {roomId} = useParams();
-
-    const navigate = useNavigate();
 
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>
@@ -105,35 +113,19 @@ const BookingForm = () => {
         if (!form.checkValidity() || !isGuestCountValid() || !isCheckoutDateValid()) {
             e.stopPropagation();
         } else {
-            setIsSubmitted(true);
+            if (onBookingSubmit) {
+                onBookingSubmit(booking, calculatePayment());
+            }
         }
 
         setIsValidated(true);
-    }
-
-    const handleBooking = async () => {
-        if (roomId == null) {
-            setErrorMessage("Room id is missing");
-            return;
-        }
-        try {
-            const confirmationCode = await bookRoom(roomId, booking);
-            setIsSubmitted(true);
-            navigate("/booking-success", {state: {message: confirmationCode}});
-
-        } catch (error: unknown) {
-            const errorMsg = error instanceof Error ? error.message : "An unexpected error occurred";
-            setErrorMessage(errorMsg);
-            setIsSubmitted(false);
-            navigate("/booking-success", {state: {error: errorMsg}});
-        }
     }
 
     return (
         <>
             <div className="container mb-5">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <div className="card card-body mt-5">
                             <h4 className="card-title">Reserve Room</h4>
 
@@ -261,24 +253,13 @@ const BookingForm = () => {
                                     </div>
                                 </fieldset>
 
-                                <div className="fom-group mt-2 mb-2">
-                                    <button type="submit" className="btn btn-hotel">
+                                <div className="fom-group mt-4 mb-2 text-center">
+                                    <button type="submit" className="btn btn-hotel" style={{ minWidth: "150px" }}>
                                         Continue
                                     </button>
                                 </div>
                             </Form>
                         </div>
-                    </div>
-
-                    <div className="col-md-6">
-                        {isSubmitted && (
-                            <BookingSummary
-                                booking={booking}
-                                payment={calculatePayment()}
-                                onConfirm={handleBooking}
-                                isFormValid={isValidated}
-                            />
-                        )}
                     </div>
                 </div>
             </div>

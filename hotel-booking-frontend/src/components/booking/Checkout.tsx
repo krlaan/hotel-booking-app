@@ -1,12 +1,26 @@
 import BookingForm from "./BookingForm.tsx";
+import BookingSummary from "./BookingSummary.tsx";
 import {useEffect, useState} from "react";
 import {getRoomById} from "../../services/RoomService.ts";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
+import {bookRoom} from "../../services/BookingService.ts";
 import {FaCar, FaParking, FaTshirt, FaTv, FaUtensils, FaWifi, FaWineGlassAlt} from "react-icons/fa";
+
+type BookingData = {
+    guestFullName: string;
+    guestEmail: string;
+    checkInDate: string;
+    checkOutDate: string;
+    numOfAdults: number;
+    numOfChildren: number;
+};
 
 const Checkout = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [bookingData, setBookingData] = useState<BookingData | null>(null);
+    const [payment, setPayment] = useState(0);
     const [roomInfo, setRoomInfo] = useState({
         photo: "",
         roomType: "",
@@ -14,6 +28,7 @@ const Checkout = () => {
     });
 
     const {roomId} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(() => {
@@ -29,10 +44,43 @@ const Checkout = () => {
         }, 2000)
     }, [roomId]);
 
+    const handleBookingSubmit = (booking: BookingData, calculatedPayment: number) => {
+        setBookingData(booking);
+        setPayment(calculatedPayment);
+        setShowModal(true);
+    };
+
+    const handleConfirmBooking = async () => {
+        if (roomId == null) {
+            setError("Room id is missing");
+            return;
+        }
+        if (bookingData == null) {
+            setError("Booking data is missing");
+            return;
+        }
+        try {
+            const confirmationCode = await bookRoom(roomId, bookingData);
+            navigate("/booking-success", {state: {message: confirmationCode}});
+
+        } catch (error: unknown) {
+            const errorMsg = error instanceof Error ? error.message : "An unexpected error occurred";
+            setError(errorMsg);
+            navigate("/booking-success", {state: {error: errorMsg}});
+        }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     return (
         <div>
             <section className="container">
-                <div className="row align-items-stretch">
+                <div className="row align-items-stretch justify-content-center">
+                    <div className="col-md-5">
+                        <BookingForm onBookingSubmit={handleBookingSubmit} />
+                    </div>
                     <div className="col-md-4 mt-5 mb-5">
                         {isLoading ? (
                             <p>Loading room information...</p>
@@ -43,7 +91,7 @@ const Checkout = () => {
                                 <img
                                     src={`data:image/png;base64,${roomInfo.photo}`}
                                     alt="Room photo"
-                                    style={{ width: "100%", height: "200px" }}
+                                    className="room-info-image"
                                 />
                                 <table className="table table-bordered">
                                     <tbody>
@@ -88,11 +136,25 @@ const Checkout = () => {
                             </div>
                         )}
                     </div>
-                    <div className="col-md-8">
-                        <BookingForm />
-                    </div>
                 </div>
             </section>
+
+            {/* Modal Overlay */}
+            {showModal && bookingData && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={closeModal} className="modal-close-button">
+                            ×
+                        </button>
+                        <BookingSummary 
+                            booking={bookingData}
+                            payment={payment}
+                            isFormValid={true}
+                            onConfirm={handleConfirmBooking}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
