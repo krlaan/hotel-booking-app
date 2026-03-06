@@ -1,9 +1,12 @@
 #root {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
+  /* allow main to grow and push footer down */
+  flex: 1;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
