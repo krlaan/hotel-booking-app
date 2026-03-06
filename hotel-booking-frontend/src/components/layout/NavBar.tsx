@@ -1,7 +1,9 @@
-import {useState} from "react"
+import {useState, useContext} from "react"
 import {NavLink, Link} from "react-router-dom"
 import Logout from "../auth/Logout.tsx";
-import { getStorageToken, getStorageUserRole, getStorageUserId } from "../../utils/storageUtils";
+import { AuthContext } from "../../context/AuthContext.ts";
+
+// Previous storage helpers are no longer needed here, context drives updates.
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
@@ -10,10 +12,14 @@ const NavBar = () => {
         setShowAccount(!showAccount)
     }
 
-    const isLoggedIn = getStorageToken()
-    const userRole = getStorageUserRole()
-    const userId = getStorageUserId()
-    const isAdmin = userRole?.includes("ROLE_ADMIN")
+    const closeAccountMenu = () => {
+        setShowAccount(false)
+    }
+
+    const { user } = useContext(AuthContext);
+    const isLoggedIn = !!user;
+    const userId = user?.sub;
+    const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow sticky-top">
@@ -37,7 +43,7 @@ const NavBar = () => {
                     <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                         <li className="nav-item">
                             <NavLink className="nav-link" aria-current="page" to={"/browse-all-rooms"}>
-                                Browse all rooms
+                                Rooms & Suites
                             </NavLink>
                         </li>
 
@@ -78,10 +84,10 @@ const NavBar = () => {
                                 className={`dropdown-menu ${showAccount ? "show" : ""}`}
                                 aria-labelledby="navbarDropdown">
                                 {isLoggedIn ? (
-                                    <Logout/>
+                                    <Logout onComplete={closeAccountMenu} />
                                 ) : (
                                     <li>
-                                        <Link className="dropdown-item" to={"/login"}>
+                                        <Link className="dropdown-item" to={"/login"} onClick={closeAccountMenu}>
                                             Login
                                         </Link>
                                     </li>

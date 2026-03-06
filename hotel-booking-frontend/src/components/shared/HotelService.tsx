@@ -1,13 +1,10 @@
 import { Row, Col, Card } from "react-bootstrap"
-import Header from "./Header"
 import {FaCocktail, FaParking, FaSnowflake, FaTshirt, FaUtensils, FaWifi} from "react-icons/fa"
 
 const HotelService = () => {
     return (
         <>
             <div className="mb-2">
-                <Header title={"Our Services"} />
-
                 <Row className="mt-4">
                     <h4 className="text-center">
                         Services at <span className="hotel-color"> LuxeStay Hotel</span>

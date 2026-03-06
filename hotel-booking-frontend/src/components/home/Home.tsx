@@ -16,11 +16,9 @@ const Home = () => {
 
             <section className="container">
                 <RoomSearch />
-                <Parallax />
                 <RoomCarousel />
+                <Parallax />
                 <HotelService />
-                <Parallax />
-                <RoomCarousel />
             </section>
         </section>
     );

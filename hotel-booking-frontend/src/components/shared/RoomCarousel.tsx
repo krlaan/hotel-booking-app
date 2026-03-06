@@ -31,11 +31,7 @@ const RoomCarousel = () => {
     }
 
     return (
-        <section className="bg-light mb-5 mt-5 shadow">
-            <Link to={"/browse-all-rooms"} className="hotel-color text-center">
-                Browse all rooms
-            </Link>
-
+        <section className="bg-light mb-5 mt-5 pt-3 shadow">
             <Container>
                 <Carousel indicators={false}>
                     {[...Array(Math.ceil(rooms.length / 4))].map((_, index) => (
