@@ -1,6 +1,9 @@
-body {
+html, body {
     min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;    /* prevent any horizontal scroll */
 }
+
 .card {
     opacity: 0.9;
 }
@@ -22,15 +25,17 @@ body {
     left: 0;
     right: 0;
     content: '';
-    background-color:rgb(169, 77, 123) ;
+    background-color: #8B6508;
     width: 0;
     margin: 0 auto;
     height: 4px;
     transition: all .5s;
 }
+
 .navbar .navbar-nav .nav-item:hover::after {
     width: 100%;
 }
+
 .navbar-dark .navbar-nav .nav-link {
     color: rgb(25, 24, 24);
 }
@@ -73,6 +78,17 @@ body {
 .hotel-color {
     color: #6F4E00;
 }
+
+/* highlighted brand text on dark photo */
+.brand-highlight {
+    color: #fff;               /* white text */
+    text-shadow: 0 0 8px rgba(0,0,0,0.7),
+                 0 0 4px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, #ffd700, #ffb700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .room-price {
     color:darkgoldenrod;
     font-family: 'Courier New', Courier, monospace;
@@ -189,18 +205,20 @@ body {
     justify-content: flex-start;
 }
 
-/* The header banner */
+/* The header banner - occupy full viewport minus navbar height, no horizontal scroll */
 .header-banner {
-    background-image:  url("./assets/images/hotel-photo.jpg");
+    background-image: url("./assets/images/hotel-photo.jpg");
     background-size: cover;
     background-position: center;
     position: relative;
-    height: 80vh;
-}
-
-.header-banner {
-    position: relative;
-    height: 500px;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;                /* full window width */
+    height: calc(100vh - 56px);  /* viewport minus navbar (~56px) */
+    overflow: hidden;
+    margin-top: -2rem;           /* cancel main padding gap */
 }
 
 @media only screen and (max-width: 768px) {

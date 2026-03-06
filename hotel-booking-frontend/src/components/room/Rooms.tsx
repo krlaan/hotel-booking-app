@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Rooms = () => {
     const [rooms, setRooms] = useState<IRoom[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [roomsPerPage] = useState(8);
+    const [roomsPerPage] = useState(4);
     const [isLoading, setIsLoading] = useState(false);
     const [filteredRooms, setFilteredRooms] = useState<IRoom[]>([]);
     const [selectedRoomType] = useState('');
@@ -130,7 +130,7 @@ const Rooms = () => {
                                 <tr key={room.id} className="text-center">
                                     <td>{room.id}</td>
                                     <td>{room.roomType}</td>
-                                    <td>{room.roomPrice}</td>
+                                    <td>{room.roomPrice}€</td>
                                     <td className="gap-2">
                                         <Link to={`/edit-room/${room.id}`}>
                                             <span className="btn btn-info btn-sm">

@@ -11,7 +11,7 @@ export const Room = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [roomsPerPage] = useState(6);
+    const [roomsPerPage] = useState(4);
     const [filteredData, setFilteredData] = useState<RoomType[]>([]);
 
     useEffect(() => {
