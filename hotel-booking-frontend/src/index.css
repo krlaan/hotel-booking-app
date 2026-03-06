@@ -367,3 +367,32 @@ html, body {
     margin: 0;
     color: #f8f9fa;
 }
+
+/* Date Slider / Date Range Picker */
+.date-slider-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.date-slider-wrapper .rdrCalendarWrapper {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Hotel color for selected dates */
+.date-slider-wrapper .rdrDayToday .rdrDayNumber span:after {
+    background: #8B6508;
+}
+
+.date-slider-wrapper .rdrSelected,
+.date-slider-wrapper .rdrInRange,
+.date-slider-wrapper .rdrStartEdge,
+.date-slider-wrapper .rdrEndEdge {
+    background: #8B6508 !important;
+}
+
+.date-slider-wrapper .rdrDayStartPreview,
+.date-slider-wrapper .rdrDayEndPreview,
+.date-slider-wrapper .rdrDayInPreview {
+    border-color: #8B6508 !important;
+}
