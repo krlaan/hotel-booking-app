@@ -7,7 +7,7 @@ type Props = {
 };
 
 const RoomTypeSelector = ({handleRoomInputChange, newRoom}: Props) => {
-    const [roomTypes, setRoomTypes] = useState([""]);
+    const [roomTypes, setRoomTypes] = useState<string[]>([]);
     const [showNewRoomTypeInput, setShowNewRoomTypeInput] = useState(false);
     const [newRoomType, setNewRoomType] = useState("");
 
@@ -16,6 +16,15 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}: Props) => {
             setRoomTypes(data);
         })
     }, [])
+
+    useEffect(() => {
+        if (!newRoom.roomType) {
+            return;
+        }
+        setRoomTypes((prev) =>
+            prev.includes(newRoom.roomType) ? prev : [...prev, newRoom.roomType]
+        );
+    }, [newRoom.roomType]);
 
     const handleNewRoomTypeInputChange = (
         e: React.ChangeEvent<HTMLInputElement>

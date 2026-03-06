@@ -1,6 +1,7 @@
 import {type ChangeEvent, useEffect, useState} from "react";
 import {getRoomById, updateRoom} from "../../services/RoomService.ts";
 import {Link, useParams} from "react-router-dom";
+import RoomTypeSelector from "../shared/RoomTypeSelector.tsx";
 
 type EditRoomData = {
     photo: File | null;
@@ -22,8 +23,8 @@ const EditRoom = () => {
     const {roomId} = useParams();
 
     const roomImageSrc = imagePreview.startsWith("blob:") ||
-        imagePreview.startsWith("data:") ||
-        imagePreview.startsWith("http")
+    imagePreview.startsWith("data:") ||
+    imagePreview.startsWith("http")
         ? imagePreview
         : `data:image/jpeg;base64,${imagePreview}`;
 
@@ -38,10 +39,10 @@ const EditRoom = () => {
     }
 
     const handleInputChange = (
-        e: ChangeEvent<HTMLInputElement>
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
-        const { name, value } = e.target
-        setRoom({ ...room, [name]: value })
+        const {name, value} = e.target
+        setRoom({...room, [name]: value})
     }
 
     useEffect(() => {
@@ -122,14 +123,9 @@ const EditRoom = () => {
                                         <label htmlFor="roomType" className="form-label hotel-color fw-semibold">
                                             Room Type
                                         </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="roomType"
-                                            name="roomType"
-                                            value={room.roomType}
-                                            onChange={handleInputChange}
-                                            required
+                                        <RoomTypeSelector
+                                            handleRoomInputChange={handleInputChange}
+                                            newRoom={room}
                                         />
                                     </div>
 
@@ -152,7 +148,7 @@ const EditRoom = () => {
 
                                     <div className="col-12">
                                         <label htmlFor="photo" className="form-label hotel-color fw-semibold">
-                                            Update Photo (optional)
+                                            Update Photo
                                         </label>
                                         <input
                                             type="file"

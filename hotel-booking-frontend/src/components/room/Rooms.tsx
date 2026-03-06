@@ -5,7 +5,7 @@ import RoomFilter from "../shared/RoomFilter.tsx";
 import type {IRoom} from "../../domain/IRoom.ts";
 import RoomPaginator from "../shared/RoomPaginator.tsx";
 import {FaEdit, FaPlus, FaTrashAlt} from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Rooms = () => {
     const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -109,7 +109,8 @@ const Rooms = () => {
                         {/* Stats Card */}
                         <div className="row mb-4">
                             <div className="col-md-4 mb-3">
-                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                <div className="card text-center shadow-sm border-0"
+                                     style={{backgroundColor: '#f8f9fa'}}>
                                     <div className="card-body py-3">
                                         <h4 className="hotel-color mb-0">{rooms.length}</h4>
                                         <small className="text-muted">Total Rooms</small>
@@ -117,7 +118,8 @@ const Rooms = () => {
                                 </div>
                             </div>
                             <div className="col-md-4 mb-3">
-                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                <div className="card text-center shadow-sm border-0"
+                                     style={{backgroundColor: '#f8f9fa'}}>
                                     <div className="card-body py-3">
                                         <h4 className="hotel-color mb-0">{filteredRooms.length}</h4>
                                         <small className="text-muted">Filtered Results</small>
@@ -125,7 +127,8 @@ const Rooms = () => {
                                 </div>
                             </div>
                             <div className="col-md-4 mb-3">
-                                <div className="card text-center shadow-sm border-0" style={{backgroundColor: '#f8f9fa'}}>
+                                <div className="card text-center shadow-sm border-0"
+                                     style={{backgroundColor: '#f8f9fa'}}>
                                     <div className="card-body py-3">
                                         <h4 className="hotel-color mb-0">{new Set(rooms.map(r => r.roomType)).size}</h4>
                                         <small className="text-muted">Room Types</small>
@@ -140,7 +143,7 @@ const Rooms = () => {
 
                             <Col md={6} className="d-flex justify-content-end align-items-center">
                                 <Link to={"/add-room"} className="btn btn-hotel">
-                                    <FaPlus className="me-2" /> Add New Room
+                                    <FaPlus className="me-2"/> Add New Room
                                 </Link>
                             </Col>
                         </Row>
@@ -149,12 +152,12 @@ const Rooms = () => {
                             <div className="card-body p-0">
                                 <table className="table table-hover mb-0">
                                     <thead style={{backgroundColor: '#f8f9fa'}}>
-                                        <tr className="text-center">
-                                            <th className="py-3">ID</th>
-                                            <th className="py-3">Room Type</th>
-                                            <th className="py-3">Price per Night</th>
-                                            <th className="py-3">Actions</th>
-                                        </tr>
+                                    <tr className="text-center">
+                                        <th className="py-3">ID</th>
+                                        <th className="py-3">Room Type</th>
+                                        <th className="py-3">Price per Night</th>
+                                        <th className="py-3">Actions</th>
+                                    </tr>
                                     </thead>
 
                                     <tbody>
@@ -165,15 +168,16 @@ const Rooms = () => {
                                             <td>{room.roomPrice}€</td>
                                             <td>
                                                 <div className="d-flex gap-2 justify-content-center">
-                                                    <Link to={`/edit-room/${room.id}`} className="btn btn-sm btn-outline-warning">
-                                                        <FaEdit className="me-1" /> Edit
+                                                    <Link to={`/edit-room/${room.id}`}
+                                                          className="btn btn-sm btn-outline-warning">
+                                                        <FaEdit className="me-1"/> Edit
                                                     </Link>
 
                                                     <button
                                                         className="btn btn-sm btn-outline-danger"
                                                         onClick={() => handleDeleteRoom(room.id)}
                                                     >
-                                                        <FaTrashAlt className="me-1" /> Delete
+                                                        <FaTrashAlt className="me-1"/> Delete
                                                     </button>
                                                 </div>
                                             </td>

@@ -91,85 +91,96 @@ const AddRoom = () => {
     }
 
     return (
-        <>
-            <section className="container mt-5 mb-5">
-                <div className="row justify-content-center">
-                    <div className="col-md-8 col-lg-6">
-                        <h2 className="mt-5 mb-2">Add a New Room</h2>
+        <section className="container mt-5 mb-5">
+            <div className="text-center">
+                <h3 className="hotel-color">Add New Room</h3>
+                <p className="text-muted">Create room details and upload a photo</p>
+            </div>
 
-                        {successMessage && (
-                            <div className="alert alert-success fade show" role="alert">
-                                {successMessage}
-                            </div>
-                        )}
-                        {errorMessage && (
-                            <div className="alert alert-danger fade show" role="alert">
-                                {errorMessage}
-                            </div>
-                        )}
+            <div className="row justify-content-center">
+                <div className="col-md-10 col-lg-8">
+                    {successMessage && (
+                        <div className="alert alert-success" role="alert">
+                            {successMessage}
+                        </div>
+                    )}
+                    {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                            {errorMessage}
+                        </div>
+                    )}
 
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <label htmlFor="roomType" className="form-label">
-                                    Room Type
-                                </label>
-                                <div>
-                                    <RoomTypeSelector
-                                        handleRoomInputChange={handleRoomInputChange}
-                                        newRoom={newRoom}
-                                    />
+                    <div className="card border-0 shadow-sm edit-room-card">
+                        <div className="card-body p-4 p-md-5">
+                            <form onSubmit={handleSubmit}>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <label htmlFor="roomType" className="form-label hotel-color fw-semibold">
+                                            Room Type
+                                        </label>
+                                        <RoomTypeSelector
+                                            handleRoomInputChange={handleRoomInputChange}
+                                            newRoom={newRoom}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="roomPrice" className="form-label hotel-color fw-semibold">
+                                            Room Price
+                                        </label>
+                                        <input
+                                            className="form-control"
+                                            required
+                                            id="roomPrice"
+                                            type="number"
+                                            name="roomPrice"
+                                            value={newRoom.roomPrice}
+                                            onChange={handleRoomInputChange}
+                                            min="0"
+                                            step="0.01"
+                                        />
+                                    </div>
+
+                                    <div className="col-12">
+                                        <label htmlFor="photo" className="form-label hotel-color fw-semibold">
+                                            Room Photo
+                                        </label>
+                                        <input
+                                            className="form-control"
+                                            id="photo"
+                                            name="photo"
+                                            type="file"
+                                            onChange={handleImageChange}
+                                        />
+
+                                        <div className="mt-3">
+                                            {imagePreview ? (
+                                                <img
+                                                    src={imagePreview}
+                                                    alt="Preview Room Photo"
+                                                    className="edit-room-preview-image"
+                                                />
+                                            ) : (
+                                                <p className="text-muted mb-0">No preview available</p>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="roomPrice" className="form-label">
-                                    Room Price
-                                </label>
-                                <input
-                                    className="form-control"
-                                    required
-                                    id="roomPrice"
-                                    type="number"
-                                    name="roomPrice"
-                                    value={newRoom.roomPrice}
-                                    onChange={handleRoomInputChange}
-                                    min="0"
-                                    step="0.01"
-                                />
-                            </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="photo" className="form-label">
-                                    Room Photo
-                                </label>
-                                <input
-                                    className="form-control"
-                                    id="photo"
-                                    name="photo"
-                                    type="file"
-                                    onChange={handleImageChange}
-                                />
-                                {imagePreview && (
-                                    <img
-                                        src={imagePreview}
-                                        alt="Preview Room Photo"
-                                        style={{ maxWidth: "400px", maxHeight: "400px" }}
-                                        className="mb-3"
-                                    />
-                                )}
-                            </div>
-                            <div className="d-grid d-md-flex mt-2">
-                                <Link to={"/rooms"} className="btn btn-outline-info">
-                                    Back
-                                </Link>
-                                <button className="btn btn-outline-primary ml-5">
-                                    Save Room
-                                </button>
-                            </div>
-                        </form>
+                                <div className="d-flex flex-wrap gap-2 justify-content-center mt-4 edit-room-actions">
+                                    <Link to={"/rooms"} className="btn btn-outline-secondary">
+                                        Back to Rooms
+                                    </Link>
+                                    <button className="btn btn-hotel" type="submit">
+                                        Save Room
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     )
 }
 
