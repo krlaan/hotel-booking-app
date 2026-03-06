@@ -5,6 +5,7 @@ import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
 import com.krlaan.hotelbooking.model.BookedRoom;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.request.BookingRequest;
+import com.krlaan.hotelbooking.response.BookedDateRangeResponse;
 import com.krlaan.hotelbooking.response.BookingResponse;
 import com.krlaan.hotelbooking.response.RoomResponse;
 import com.krlaan.hotelbooking.service.IBookingService;
@@ -49,6 +50,17 @@ public class BookingController {
             bookingResponses.add(bookingResponse);
         }
         return ResponseEntity.ok(bookingResponses);
+    }
+
+    @GetMapping("/room/{roomId}/booked-dates")
+    public ResponseEntity<List<BookedDateRangeResponse>> getBookedDatesByRoomId(@PathVariable Long roomId) {
+        List<BookedRoom> bookings = bookingService.getBookingsByRoomId(roomId);
+        
+        List<BookedDateRangeResponse> dateRanges = bookings.stream()
+                .map(booking -> new BookedDateRangeResponse(booking.getCheckInDate(), booking.getCheckOutDate()))
+                .toList();
+
+        return ResponseEntity.ok(dateRanges);
     }
 
     @GetMapping("/confirmation/{confirmationCode}")
