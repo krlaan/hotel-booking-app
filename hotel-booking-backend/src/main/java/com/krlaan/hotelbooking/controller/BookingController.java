@@ -2,7 +2,7 @@ package com.krlaan.hotelbooking.controller;
 
 import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
-import com.krlaan.hotelbooking.model.BookedRoom;
+import com.krlaan.hotelbooking.model.Booking;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.request.BookingRequest;
 import com.krlaan.hotelbooking.response.BookedDateRangeResponse;
@@ -29,10 +29,10 @@ public class BookingController {
     @GetMapping("/all-bookings")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<BookingResponse>> getAllBookings() {
-        List<BookedRoom> bookings = bookingService.getAllBookings();
+        List<Booking> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
 
-        for (BookedRoom booking : bookings) {
+        for (Booking booking : bookings) {
             BookingResponse bookingResponse = getBookingResponse(booking);
             bookingResponses.add(bookingResponse);
         }
@@ -42,10 +42,10 @@ public class BookingController {
 
     @GetMapping("/user/{email}/bookings")
     public ResponseEntity<List<BookingResponse>> getBookingsByUserEmail(@PathVariable String email) {
-        List<BookedRoom> bookings = bookingService.getBookingsByUserEmail(email);
+        List<Booking> bookings = bookingService.getBookingsByUserEmail(email);
 
         List<BookingResponse> bookingResponses = new ArrayList<>();
-        for (BookedRoom booking : bookings) {
+        for (Booking booking : bookings) {
             BookingResponse bookingResponse = getBookingResponse(booking);
             bookingResponses.add(bookingResponse);
         }
@@ -54,7 +54,7 @@ public class BookingController {
 
     @GetMapping("/room/{roomId}/booked-dates")
     public ResponseEntity<List<BookedDateRangeResponse>> getBookedDatesByRoomId(@PathVariable Long roomId) {
-        List<BookedRoom> bookings = bookingService.getBookingsByRoomId(roomId);
+        List<Booking> bookings = bookingService.getBookingsByRoomId(roomId);
         
         List<BookedDateRangeResponse> dateRanges = bookings.stream()
                 .map(booking -> new BookedDateRangeResponse(booking.getCheckInDate(), booking.getCheckOutDate()))
@@ -65,7 +65,7 @@ public class BookingController {
 
     @GetMapping("/confirmation/{confirmationCode}")
     public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode) throws ResourceNotFoundException {
-        BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
+        Booking booking = bookingService.findByBookingConfirmationCode(confirmationCode);
         BookingResponse bookingResponse = getBookingResponse(booking);
 
         return ResponseEntity.ok(bookingResponse);
@@ -77,16 +77,16 @@ public class BookingController {
             @PathVariable Long roomId,
             @RequestBody BookingRequest bookingRequest) {
         try {
-            BookedRoom bookedRoom = new BookedRoom();
-            bookedRoom.setCheckInDate(bookingRequest.getCheckInDate());
-            bookedRoom.setCheckOutDate(bookingRequest.getCheckOutDate());
-            bookedRoom.setGuestFullName(bookingRequest.getGuestFullName());
-            bookedRoom.setGuestEmail(bookingRequest.getGuestEmail());
-            bookedRoom.setNumOfAdults(bookingRequest.getNumOfAdults());
-            bookedRoom.setNumOfChildren(bookingRequest.getNumOfChildren());
-            bookedRoom.setTotalNumOfGuest(bookingRequest.getNumOfAdults() + bookingRequest.getNumOfChildren());
+            Booking booking = new Booking();
+            booking.setCheckInDate(bookingRequest.getCheckInDate());
+            booking.setCheckOutDate(bookingRequest.getCheckOutDate());
+            booking.setGuestFullName(bookingRequest.getGuestFullName());
+            booking.setGuestEmail(bookingRequest.getGuestEmail());
+            booking.setNumOfAdults(bookingRequest.getNumOfAdults());
+            booking.setNumOfChildren(bookingRequest.getNumOfChildren());
+            booking.setTotalNumOfGuest(bookingRequest.getNumOfAdults() + bookingRequest.getNumOfChildren());
 
-            String confirmationCode = bookingService.saveBooking(roomId, bookedRoom);
+            String confirmationCode = bookingService.saveBooking(roomId, booking);
             return ResponseEntity.ok("Room booked successfully! Your confirmation code is: " + confirmationCode);
 
         } catch (InvalidBookingRequestException e){
@@ -99,7 +99,7 @@ public class BookingController {
         bookingService.cancelBooking(bookingId);
     }
 
-    private BookingResponse getBookingResponse(BookedRoom booking) {
+    private BookingResponse getBookingResponse(Booking booking) {
         Room room = roomService.getRoomById(booking.getRoom().getId()).get();
 
         RoomResponse bookingResponse = new RoomResponse(

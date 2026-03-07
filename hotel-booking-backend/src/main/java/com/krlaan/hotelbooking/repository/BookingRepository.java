@@ -1,16 +1,16 @@
 package com.krlaan.hotelbooking.repository;
 
-import com.krlaan.hotelbooking.model.BookedRoom;
+import com.krlaan.hotelbooking.model.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BookingRepository extends JpaRepository<BookedRoom, Long> {
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    Optional<BookedRoom> findByBookingConfirmationCode(String confirmationCode);
+    Optional<Booking> findByBookingConfirmationCode(String confirmationCode);
 
-    List<BookedRoom> findByGuestEmail(String email);
+    List<Booking> findByGuestEmail(String email);
 
-    List<BookedRoom> findByRoomId(Long roomId);
+    List<Booking> findByRoomId(Long roomId);
 }

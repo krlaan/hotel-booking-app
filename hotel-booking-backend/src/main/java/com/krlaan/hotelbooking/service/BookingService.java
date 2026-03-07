@@ -2,7 +2,7 @@ package com.krlaan.hotelbooking.service;
 
 import com.krlaan.hotelbooking.exception.InvalidBookingRequestException;
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
-import com.krlaan.hotelbooking.model.BookedRoom;
+import com.krlaan.hotelbooking.model.Booking;
 import com.krlaan.hotelbooking.model.Room;
 import com.krlaan.hotelbooking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,34 +18,34 @@ public class BookingService implements IBookingService {
     private final IRoomService roomService;
 
     @Override
-    public List<BookedRoom> getAllBookings() {
+    public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
 
     @Override
-    public List<BookedRoom> getBookingsByUserEmail(String email) {
+    public List<Booking> getBookingsByUserEmail(String email) {
         return bookingRepository.findByGuestEmail(email);
     }
 
     @Override
-    public List<BookedRoom> getBookingsByRoomId(Long roomId) {
+    public List<Booking> getBookingsByRoomId(Long roomId) {
         return bookingRepository.findByRoomId(roomId);
     }
 
     @Override
-    public BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
+    public Booking findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
         return bookingRepository.findByBookingConfirmationCode(confirmationCode)
                 .orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code:" + confirmationCode));
     }
 
     @Override
-    public String saveBooking(Long roomId, BookedRoom bookingRequest) {
+    public String saveBooking(Long roomId, Booking bookingRequest) {
         if (!bookingRequest.getCheckOutDate().isAfter(bookingRequest.getCheckInDate())) {
             throw new InvalidBookingRequestException("Check-out date must be after check-in date");
         }
 
         Room room = roomService.getRoomById(roomId).get();
-        List<BookedRoom> existingBookings = room.getBookings();
+        List<Booking> existingBookings = room.getBookings();
 
         boolean roomIsAvailable = roomIsAvailable(bookingRequest, existingBookings);
 
@@ -64,7 +64,7 @@ public class BookingService implements IBookingService {
         bookingRepository.deleteById(bookingId);
     }
 
-    private boolean roomIsAvailable(BookedRoom bookingRequest, List<BookedRoom> existingBookings) {
+    private boolean roomIsAvailable(Booking bookingRequest, List<Booking> existingBookings) {
         return existingBookings.stream()
                 .noneMatch(existingBooking ->
                         bookingRequest.getCheckInDate().equals(existingBooking.getCheckInDate())

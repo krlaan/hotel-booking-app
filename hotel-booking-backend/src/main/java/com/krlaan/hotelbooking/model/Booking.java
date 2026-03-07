@@ -1,19 +1,16 @@
 package com.krlaan.hotelbooking.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "booked_room")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookedRoom {
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,21 +1,21 @@
 package com.krlaan.hotelbooking.service;
 
 import com.krlaan.hotelbooking.exception.ResourceNotFoundException;
-import com.krlaan.hotelbooking.model.BookedRoom;
+import com.krlaan.hotelbooking.model.Booking;
 
 import java.util.List;
 
 public interface IBookingService {
 
-    List<BookedRoom> getAllBookings();
+    List<Booking> getAllBookings();
 
-    List<BookedRoom> getBookingsByUserEmail(String email);
+    List<Booking> getBookingsByUserEmail(String email);
 
-    List<BookedRoom> getBookingsByRoomId(Long roomId);
+    List<Booking> getBookingsByRoomId(Long roomId);
 
-    BookedRoom findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;
+    Booking findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;
 
-    String saveBooking(Long roomId, BookedRoom bookingRequest);
+    String saveBooking(Long roomId, Booking bookingRequest);
 
     void cancelBooking(Long bookingId);
 }

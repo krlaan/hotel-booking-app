@@ -28,9 +28,9 @@ public class Room {
     private Blob photo;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BookedRoom> bookings;
+    private List<Booking> bookings;
 
-    public void addBooking(BookedRoom booking) {
+    public void addBooking(Booking booking) {
         if (bookings == null) {
             bookings = new ArrayList<>();
         }
