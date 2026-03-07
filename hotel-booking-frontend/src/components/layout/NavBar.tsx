@@ -22,8 +22,8 @@ const NavBar = () => {
     const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow fixed-top">
-            <div className="container-fluid">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary shadow fixed-top" style={{paddingLeft: '4rem', paddingRight: '4rem', paddingTop: '0.25rem', paddingBottom: '0.25rem'}}>
+            <div className="container-fluid" style={{maxWidth: '1400px'}}>
                 <Link to={"/"} className="navbar-brand">
                     <span className="hotel-color">LuxeStay Hotel</span>
                 </Link>
